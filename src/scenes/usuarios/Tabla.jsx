@@ -1,37 +1,25 @@
-import { Box, Avatar, useTheme, IconButton } from '@mui/material'
-import { DataGrid } from '@mui/x-data-grid'
-import DeleteIcon from '@mui/icons-material/DeleteOutlined'
-import Header from '../../components/Header'
-
 // ? IMPORTACIÓN DE COMPONENTES
-import { useFetch } from '../../api/usersSWR'
-
+import { useQuery } from 'react-query'
+import { Box, Avatar, useTheme, Typography } from '@mui/material'
+import CircularProgress from '@mui/material/CircularProgress';
+import { DataGrid } from '@mui/x-data-grid'
+import Header from '../../components/Header'
 // Importamos las funciones de registroUsuario
 import { useMemo } from 'react'
 
+import { obtenerTodosLosUsuarios } from '../../api/users'
+
+// import { obtenerTodosLosUsuarios } from '../../api/users'
 const Tabla = () => {
-  const { ObtenerTodosLosUsuarios } = useFetch()
-  const { data: usuarios } = ObtenerTodosLosUsuarios()
-  console.log(usuarios)
+  // Query para buscar todos los Usuarios
+  const { isLoading, data } = useQuery(
+    'busquedausuarios',
+    obtenerTodosLosUsuarios
+  )
   // Uso del Tema
   const tema = useTheme()
 
-  // Comprobamos si se presento un error al ejecutar la función
-  if (isError) {
-    return <h2>Se Presento un Error</h2>
-  }
-
-  // ? FUNCIONES
-
-  const eliminar = async _id => {
-    console.log(_id)
-    // try {
-    //   await mutate(eliminarUsuario(_id))
-    // } catch (error) {
-    //   console.log(error)
-    // }
-  }
-
+  // Columnas de la tabla de Auditores
   const columns = useMemo(
     () => [
       {
@@ -56,20 +44,21 @@ const Tabla = () => {
       },
       { field: 'email', headerName: 'Email', flex: 1 },
       { field: 'cargo', headerName: 'Cargo', flex: 1 },
-      {
-        field: 'actions',
-        headerName: 'Acciones',
-        type: 'actions',
-        width: 150,
-        renderCell: params => (
-          <IconButton onClick={() => eliminar(params.row._id)}>
-            <DeleteIcon />
-          </IconButton>
-        ),
-      },
     ],
     []
   )
+
+  // ? FUNCIONES
+
+  // Se verifica si se esta cargando la información
+  if (isLoading) {
+    return (
+      <Box sx={{ display: 'flex' }}>
+      <CircularProgress />
+      <Typography>Cargando...</Typography>
+    </Box>
+    )
+  }
 
   return (
     <Box m='1.5rem 2.5rem'>
@@ -103,9 +92,9 @@ const Tabla = () => {
         }}
       >
         <DataGrid
-          loading={isLoading || !usuarios}
+          loading={isLoading}
           getRowId={row => row._id}
-          rows={usuarios || []}
+          rows={data || []}
           columns={columns}
           initialState={{
             pagination: {

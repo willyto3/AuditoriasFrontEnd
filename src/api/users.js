@@ -18,12 +18,8 @@ export const userUrlEndPoint = '/usuarios'
 // ? OBTENER TODOS LOS USUARIOS
 // Se crea y exporta la Función para obtener todos los usuarios
 export const obtenerTodosLosUsuarios = async () => {
-  try {
-    const response = await usuariosAPI.get(userUrlEndPoint)
-    return response.data
-  } catch (error) {
-    console.log(error)
-  }
+  const response = await usuariosAPI.get(userUrlEndPoint)
+  return response.data
 }
 
 // ? CREAR UN USUARIO

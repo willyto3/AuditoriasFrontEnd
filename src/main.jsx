@@ -7,18 +7,20 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 // Importacion del Router Provider
 import { RouterProvider } from 'react-router-dom'
+// Importacion del Query Provider
+import { QueryClientProvider, QueryClient } from 'react-query'
 
 // ? IMPORTACIÓN DE ELEMENTOS
 // Importacion del Router
 import { router } from './router'
 
-import { SWRConfig } from 'swr'
+const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
-    <SWRConfig value={{ provider: () => new Map() }}>
+    <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-    </SWRConfig>
+    </QueryClientProvider>
   </React.StrictMode>
 )
