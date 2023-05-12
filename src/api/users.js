@@ -7,7 +7,6 @@ const BASE_URL = 'http://localhost:5001/api/v1'
 // Se genera la conexión por Axios con la base de Datos
 const usuariosAPI = axios.create({
   baseURL: BASE_URL,
-  timeout: 8000,
   headers: {
     Accept: 'application/json',
   },
@@ -19,8 +18,12 @@ export const userUrlEndPoint = '/usuarios'
 // ? OBTENER TODOS LOS USUARIOS
 // Se crea y exporta la Función para obtener todos los usuarios
 export const obtenerTodosLosUsuarios = async () => {
-  const response = await usuariosAPI.get(userUrlEndPoint)
-  return response.data
+  try {
+    const response = await usuariosAPI.get(userUrlEndPoint)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // ? CREAR UN USUARIO
@@ -30,7 +33,6 @@ export const registroUsuario = async formData => {
     `${userUrlEndPoint}/registrousuario`,
     formData
   )
-
   return response.data
 }
 

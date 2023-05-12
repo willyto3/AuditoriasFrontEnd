@@ -8,33 +8,24 @@ import {
   registroUsuario,
 } from '../api/users'
 
-export function useUsers() {
-  // Hacemos uso del UseSWR
-  const { data, isLoading, error } = useSWR(cacheKey, obtenerTodosLosUsuarios, {
-    suspense: true,
-  })
-
-  return {
-    usuarios: data,
-    isLoading,
-    isError: error,
-  }
+export const useFetch = () => {
+  ObtenerTodosLosUsuarios: () =>
+    useSWR(cacheKey, async () => {
+      const response = await obtenerTodosLosUsuarios()
+      console.log('SWR Respuesta', response)
+      return response
+    })
 }
+// const fetcher = (...args) => fetch(...args).then(response => response.json())
 
-export function useCreate() {
-  // Hacemos uso del UseSWR
-  const { mutate } = useSWR(cacheKey, registroUsuario, { suspense: true })
+// export function useUsers() {
+//   // Hacemos uso del UseSWR
+//   const { data, isLoading, error, mutate } = useSWR(cacheKey, obtenerTodosLosUsuarios)
 
-  return {
-    mutate,
-  }
-}
-
-export function useDelete() {
-  // Hacemos uso del UseSWR
-  const { mutate } = useSWR(cacheKey, eliminarUsuario, { suspense: true })
-
-  return {
-    mutate,
-  }
-}
+//   return {
+//     usuarios: data,
+//     isLoading,
+//     isError: error,
+//     mutate,
+//   }
+// }

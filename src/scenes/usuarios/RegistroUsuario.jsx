@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material'
 
 import Header from '../../components/Header'
-import Formulario from './Formulario'
+// import Formulario from './Formulario'
 
 
 const RegistroUsuario = () => {
@@ -9,8 +9,8 @@ const RegistroUsuario = () => {
     <Box m='1rem 1.5rem'>
       <Header title='Auditores' />
       <Grid container>
-        <Grid item md={4}>
-          <Formulario />
+        <Grid item md={6}>
+          {/* <Formulario /> */}
         </Grid>
       </Grid>
     </Box>

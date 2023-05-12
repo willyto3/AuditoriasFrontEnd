@@ -1,85 +1,70 @@
-import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
-import { Box, Button } from '@mui/material'
-
-import toast, { Toaster } from 'react-hot-toast'
-
-import DataTable from 'react-data-table-component'
-
-// import Dialog from '@mui/material/Dialog'
-// import DialogActions from '@mui/material/DialogActions'
-// import DialogContent from '@mui/material/DialogContent'
-// import DialogContentText from '@mui/material/DialogContentText'
-// import DialogTitle from '@mui/material/DialogTitle'
-
+import { Box, Avatar, useTheme, IconButton } from '@mui/material'
+import { DataGrid } from '@mui/x-data-grid'
+import DeleteIcon from '@mui/icons-material/DeleteOutlined'
 import Header from '../../components/Header'
 
-// import Alerta from '../../components/Alerta'
-
 // ? IMPORTACIÓN DE COMPONENTES
-
-import { useDelete, useUsers } from '../../api/usersSWR'
+import { useFetch } from '../../api/usersSWR'
 
 // Importamos las funciones de registroUsuario
 import { useMemo } from 'react'
-import { eliminarUsuario } from '../../api/users'
 
 const Tabla = () => {
-  const { usuarios, isLoading, isError, isValidating } = useUsers()
-
-  const { mutate } = useDelete()
+  const { ObtenerTodosLosUsuarios } = useFetch()
+  const { data: usuarios } = ObtenerTodosLosUsuarios()
+  console.log(usuarios)
+  // Uso del Tema
+  const tema = useTheme()
 
   // Comprobamos si se presento un error al ejecutar la función
   if (isError) {
-    return <h2>{isError}</h2>
+    return <h2>Se Presento un Error</h2>
   }
-
-  // const handleClose = () => {
-  //   // setAbierto(false)
-  //   // setEleccion(false)
-  // }
 
   // ? FUNCIONES
-  // Funcion para Registrar un Usuario
-  const eliminarUsuarioMutation = async _id => {
-    try {
-      await mutate(eliminarUsuario(_id))
 
-      toast.success(`Auditor Creado.`, {
-        duration: 6000,
-        icon: '🎉',
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const manejoBoton = async values => {
-    // setAbierto(true)
-
-    eliminarUsuarioMutation(values)
-
-    // handleClose()
+  const eliminar = async _id => {
+    console.log(_id)
+    // try {
+    //   await mutate(eliminarUsuario(_id))
+    // } catch (error) {
+    //   console.log(error)
+    // }
   }
 
   const columns = useMemo(
     () => [
-      { name: 'Documento', selector: row => row.documento, sortable: true },
-      { name: 'Nombres', selector: row => row.nombres, sortable: true },
-      { name: 'Apellidos', selector: row => row.apellidos, sortable: true },
-      { name: 'email', selector: row => row.email, sortable: true },
       {
-        cell: row => (
-          <Button onClick={() => console.log(`ACTUALIZAR ${row._id}`)}>
-            <EditIcon />
-          </Button>
+        field: 'picturePath',
+        headerName: 'Avatar',
+        width: '100',
+        renderCell: params => (
+          <Avatar
+            src={`http://localhost:5001/images/${params.row.picturePath}`}
+          />
         ),
+        sortable: false,
+        filterable: false,
       },
+      { field: 'documento', headerName: 'Documento', flex: 0.5 },
       {
-        cell: row => (
-          <Button onClick={() => manejoBoton(row._id)}>
+        field: 'fullName',
+        headerName: 'Nombre Completo',
+        flex: 1,
+        valueGetter: params =>
+          `${params.row.nombres || ''} ${params.row.apellidos || ''}`,
+      },
+      { field: 'email', headerName: 'Email', flex: 1 },
+      { field: 'cargo', headerName: 'Cargo', flex: 1 },
+      {
+        field: 'actions',
+        headerName: 'Acciones',
+        type: 'actions',
+        width: 150,
+        renderCell: params => (
+          <IconButton onClick={() => eliminar(params.row._id)}>
             <DeleteIcon />
-          </Button>
+          </IconButton>
         ),
       },
     ],
@@ -87,47 +72,51 @@ const Tabla = () => {
   )
 
   return (
-    <Box>
-      <Toaster toastOptions={{ position: 'top-center' }} />
-
-      {/* {eliminacion ? <Alerta mensaje={eliminacion} severity='success' /> : ''}
-      {abierto ? (
-        <Dialog
-          open={abierto}
-          onClose={handleClose}
-          aria-labelledby='alert-dialog-title'
-          aria-describedby='alert-dialog-description'
-        >
-          <DialogTitle id='alert-dialog-title'>
-            {'Desea Eliminar un Auditor?'}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id='alert-dialog-description'>
-              {`Deseas eliminar el Auditor.`}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>No</Button>
-            <Button onClick={setEleccion(true)} autoFocus>
-              Si
-            </Button>
-          </DialogActions>
-        </Dialog>
-      ) : (
-        ''
-      )} */}
-      <Header subtitle='Lista de Auditores' />
-      <Box mt='10px' height='70vh'>
-        {isValidating ? (
-          <span>Validando</span>
-        ) : (
-          <DataTable
-            pagination
-            columns={columns}
-            data={usuarios}
-            progressPending={isLoading}
-          />
-        )}
+    <Box m='1.5rem 2.5rem'>
+      <Header subtitle='Listado de Auditores' />
+      <Box
+        mt='40px'
+        height='75vh'
+        sx={{
+          '& .MuiDataGrid-root': {
+            border: 'none',
+          },
+          '& .MuiDataGrid-cell': {
+            borderBottom: 'none',
+          },
+          '& .MuiDataGrid-columnHeaders': {
+            borderBottom: 'none',
+            backgroundColor: tema.palette.background.alt,
+            color: tema.palette.secondary[100],
+          },
+          '& .MuiDataGrid-virtualScroller': {
+            backgroundColor: tema.palette.primary.light,
+          },
+          '& .MuiDataGrid-footerContainer': {
+            borderTop: 'none',
+            backgroundColor: tema.palette.background.alt,
+            color: tema.palette.secondary[100],
+          },
+          '& .MuiDataGrid-toolbarContainer .MuiDataGrid-text': {
+            color: `${tema.palette.secondary[200]} !important`,
+          },
+        }}
+      >
+        <DataGrid
+          loading={isLoading || !usuarios}
+          getRowId={row => row._id}
+          rows={usuarios || []}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 10,
+              },
+            },
+          }}
+          pageSizeOptions={[10, 15, 20]}
+          autoHeight={true}
+        />
       </Box>
     </Box>
   )

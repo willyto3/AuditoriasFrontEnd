@@ -11,7 +11,6 @@ const Usuarios = () => {
         <Grid item md={11}>
           <Tabla />
         </Grid>
-        
       </Grid>
     </Box>
   )

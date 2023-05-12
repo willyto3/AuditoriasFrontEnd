@@ -37,7 +37,8 @@ export const valoresIniciales = {
   apellidos: '',
   documento: '',
   cargo: '',
-  rutaFoto:''
+  rutaFoto:'',
+  confirmarContrasena:''
 }
 
 // Opciones de Selección
