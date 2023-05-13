@@ -1,9 +1,13 @@
 // ? IMPORTACIÓN DE COMPONENTES
-import { useQuery } from 'react-query'
+import { useQuery, useMutation } from 'react-query'
 
 // Importamos las funciones de API
-import { obtenerTodosLosUsuarios } from '../api/users'
+import { obtenerTodosLosUsuarios, registroUsuario } from '../api/users'
 
 export const useUsuarios = () => {
   return useQuery('busquedausuarios', obtenerTodosLosUsuarios)
+}
+
+export const useRegistroUsuario = () => {
+  return useMutation('registroUsuario', registroUsuario)
 }

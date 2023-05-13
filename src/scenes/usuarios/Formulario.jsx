@@ -22,20 +22,28 @@ import FlexBetween from '../../components/FlexBetween'
 import Header from '../../components/Header'
 // Importamos el esquema del formulario de Usuario
 import { esquemaIngreso, opcionesCargo, valoresIniciales } from './esquema'
-
-// Importamos las funciones de registroUsuario
-import { registroUsuario } from '../../api/users'
+import { useRegistroUsuario } from '../../hooks/useUsuarios'
 
 const Formulario = () => {
-
   const { palette } = useTheme()
   const navigate = useNavigate()
   const pantallaCompleta = useMediaQuery('(min-width:600px')
-
+  const { mutate: anadirUsuario } = useRegistroUsuario()
   // ? FUNCIONES
-   // Funcion para manejar el boton del formulario
-  const manejoBoton = async (values, onsubmitProps) => {
-    await registroUsuarioMutation(values, onsubmitProps)
+  // Funcion para registrar un usuario
+  const registrarUsuario = async (values, onsubmitProps) => {
+    // this allows us to send form info with image
+    const formData = new FormData()
+
+    for (const value in values) {
+      formData.append(value, values[value])
+    }
+
+    formData.append('picturePath', values.picture.name)
+
+    console.log(values)
+    anadirUsuario(values)
+    // onsubmitProps.resetForm()
   }
 
   // Funcion para controlar los eventos en el input Cargo
@@ -53,7 +61,7 @@ const Formulario = () => {
 
       <Header subtitle='Registro de Auditores' />
       <Formik
-        onSubmit={manejoBoton}
+        onSubmit={registrarUsuario}
         initialValues={valoresIniciales}
         validationSchema={esquemaIngreso}
         validateOnChange={false}

@@ -18,6 +18,7 @@ import Ingreso from '../scenes/ingreso'
 import Inicio from '../scenes/inicio'
 import Usuarios from '../scenes/usuarios'
 import RegistroUsuario from '../scenes/usuarios/RegistroUsuario'
+import Usuario from '../scenes/usuarios/Usuario'
 
 // Función Router
 export const router = createBrowserRouter(
@@ -31,6 +32,7 @@ export const router = createBrowserRouter(
         <Route index element={<DashBoard />} />
         <Route path='listado' element={<Usuarios />} />
         <Route path='registro' element={<RegistroUsuario />} />
+        <Route path='usuario/:id' element={<Usuario />} />
       </Route>
       <Route path='*' element={<Error404 />} />
     </Route>

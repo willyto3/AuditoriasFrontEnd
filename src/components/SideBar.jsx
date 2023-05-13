@@ -8,7 +8,6 @@ import {
   HomeOutlined,
   PieChartOutlined,
   PointOfSaleOutlined,
-  PublicOutlined,
   ReceiptLongOutlined,
   SettingsOutlined,
   TodayOutlined,
