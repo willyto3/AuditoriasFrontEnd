@@ -9,6 +9,9 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 // Importacion del Query Provider
 import { QueryClientProvider, QueryClient } from 'react-query'
+// // Importación de las herramientas de React Query
+// import { ReactQueryDevTools } from 'react-query/devtools'
+
 
 // ? IMPORTACIÓN DE ELEMENTOS
 // Importacion del Router
@@ -20,7 +23,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+     
       <RouterProvider router={router} />
+      {/* <ReactQueryDevTools initialIsOpen={false} position='botton-rigth' /> */}
     </QueryClientProvider>
   </React.StrictMode>
 )

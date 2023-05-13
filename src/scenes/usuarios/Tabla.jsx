@@ -1,21 +1,18 @@
 // ? IMPORTACIÓN DE COMPONENTES
-import { useQuery } from 'react-query'
 import { Box, Avatar, useTheme, Typography } from '@mui/material'
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress'
 import { DataGrid } from '@mui/x-data-grid'
 import Header from '../../components/Header'
 // Importamos las funciones de registroUsuario
 import { useMemo } from 'react'
 
-import { obtenerTodosLosUsuarios } from '../../api/users'
+import Acciones from './Acciones'
+import { useUsuarios } from '../../hooks/useUsuarios'
 
-// import { obtenerTodosLosUsuarios } from '../../api/users'
 const Tabla = () => {
   // Query para buscar todos los Usuarios
-  const { isLoading, data } = useQuery(
-    'busquedausuarios',
-    obtenerTodosLosUsuarios
-  )
+  const { data, isLoading, isError, error } = useUsuarios()
+
   // Uso del Tema
   const tema = useTheme()
 
@@ -44,6 +41,13 @@ const Tabla = () => {
       },
       { field: 'email', headerName: 'Email', flex: 1 },
       { field: 'cargo', headerName: 'Cargo', flex: 1 },
+      {
+        field: 'actions',
+        headerName: 'Acciones',
+        type: 'actions',
+        width: 150,
+        renderCell: params => <Acciones {...{ params }} />,
+      },
     ],
     []
   )
@@ -54,9 +58,19 @@ const Tabla = () => {
   if (isLoading) {
     return (
       <Box sx={{ display: 'flex' }}>
-      <CircularProgress />
-      <Typography>Cargando...</Typography>
-    </Box>
+        <CircularProgress />
+        <Typography>Cargando...</Typography>
+      </Box>
+    )
+  }
+
+  // Se verifica si se presento un Error
+  if (isError) {
+    return (
+      <Box sx={{ display: 'flex' }}>
+        <CircularProgress />
+        <Typography>{error.message}</Typography>
+      </Box>
     )
   }
 
