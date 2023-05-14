@@ -1,5 +1,7 @@
 // ? IMPORTACIÓN DE MODULOS
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
 import {
   Alert,
   Box,
@@ -9,13 +11,12 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
+import { useSnackbar } from 'notistack'
 import MenuItem from '@mui/material/MenuItem'
 import { Form, Formik } from 'formik'
 import { useState } from 'react'
 import Dropzone from 'react-dropzone'
 import { useNavigate } from 'react-router-dom'
-
-import toast, { Toaster } from 'react-hot-toast'
 
 // ? IMPORTACIÓN DE COMPONENTES
 import FlexBetween from '../../components/FlexBetween'
@@ -25,6 +26,7 @@ import { esquemaIngreso, opcionesCargo, valoresIniciales } from './esquema'
 import { useRegistroUsuario } from '../../hooks/useUsuarios'
 
 const Formulario = () => {
+  const { enqueueSnackbar } = useSnackbar()
   const { palette } = useTheme()
   const navigate = useNavigate()
   const pantallaCompleta = useMediaQuery('(min-width:600px')
@@ -32,6 +34,7 @@ const Formulario = () => {
   // ? FUNCIONES
   // Funcion para registrar un usuario
   const registrarUsuario = async (values, onsubmitProps) => {
+    console.log(values)
     // this allows us to send form info with image
     const formData = new FormData()
 
@@ -41,9 +44,20 @@ const Formulario = () => {
 
     formData.append('picturePath', values.picture.name)
 
-    console.log(values)
-    anadirUsuario(values)
-    // onsubmitProps.resetForm()
+    console.log(formData)
+    anadirUsuario(formData)
+    enqueueSnackbar(
+      `Se creo el Auditor ${values.nombres} ${values.apellidos}`,
+      {
+        variant: 'success',
+        anchorOrigin: {
+          vertical: 'top',
+          horizontal: 'center',
+        },
+      }
+    )
+    onsubmitProps.resetForm()
+    navigate('/dashboard')
   }
 
   // Funcion para controlar los eventos en el input Cargo
@@ -51,14 +65,30 @@ const Formulario = () => {
     setCargo(event.target.value)
   }
 
+ 
+
+  const action = (
+    <>
+      <Button color='secondary' size='small' onClick={handleClose}>
+        UNDO
+      </Button>
+      <IconButton
+        size='small'
+        aria-label='close'
+        color='inherit'
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize='small' />
+      </IconButton>
+    </>
+  )
+
   // ? USE STATE
   const [cargo, setCargo] = useState('')
   const [errorIngreso, setErrorIngreso] = useState('')
 
   return (
     <Box m='1rem 1rem'>
-      <Toaster toastOptions={{ position: 'top-center' }} />
-
       <Header subtitle='Registro de Auditores' />
       <Formik
         onSubmit={registrarUsuario}

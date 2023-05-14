@@ -12,7 +12,6 @@ import {
   useMediaQuery,
 } from '@mui/material'
 
-
 // ? IMPORTACIÓN DE COMPONENTES
 import { auditoriaStore } from '../store/auditoriaStore'
 // Importamos themeSettings del arhivo theme
@@ -44,7 +43,6 @@ const Protegido = () => {
 
   return (
     <ThemeProvider theme={tema}>
-       
       <CssBaseline />
       <Box
         display={pantallaCompleta ? 'flex' : 'block'}
@@ -65,7 +63,6 @@ const Protegido = () => {
           <Outlet />
         </Box>
       </Box>
-      
     </ThemeProvider>
   )
 }

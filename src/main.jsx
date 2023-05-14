@@ -9,9 +9,13 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 // Importacion del Query Provider
 import { QueryClientProvider, QueryClient } from 'react-query'
+// Importacion del SnackbarProvider
+import { SnackbarProvider, closeSnackbar } from 'notistack'
 // // Importación de las herramientas de React Query
 // import { ReactQueryDevTools } from 'react-query/devtools'
 
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
 
 // ? IMPORTACIÓN DE ELEMENTOS
 // Importacion del Router
@@ -23,8 +27,25 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-     
-      <RouterProvider router={router} />
+      <SnackbarProvider
+        maxSnack={3}
+        autoHideDuration={6000}
+        action={snackbarId => (
+          <>
+            <IconButton
+              size='small'
+              aria-label='close'
+              color='inherit'
+              onClick={() => closeSnackbar(snackbarId)}
+            >
+              <CloseIcon fontSize='small' />
+            </IconButton>
+          </>
+        )}
+      >
+        <RouterProvider router={router} />
+      </SnackbarProvider>
+
       {/* <ReactQueryDevTools initialIsOpen={false} position='botton-rigth' /> */}
     </QueryClientProvider>
   </React.StrictMode>

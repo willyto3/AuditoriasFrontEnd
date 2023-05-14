@@ -1,26 +1,30 @@
 // ? IMPORTACIÓN DE MODULOS
-// Importamos la tienda
-import { Box } from '@mui/material'
-import toast, { Toaster } from 'react-hot-toast'
-import { auditoriaStore } from '../../store/auditoriaStore'
+import { Box, Button } from '@mui/material'
+import { useSnackbar } from 'notistack'
 
 // ? IMPORTACIÓN DE COMPONENTES
+// import { auditoriaStore } from '../../store/auditoriaStore'
 
 const DashBoard = () => {
-  // se usa la tienda para conocer el valor del usuario
-  const usuario = auditoriaStore(state => state.usuario)
+  const { enqueueSnackbar } = useSnackbar()
+
+  // // se usa la tienda para conocer el valor del usuario
+  // const usuario = auditoriaStore(state => state.usuario)
+
+  const handleClick = () => {
+    enqueueSnackbar('Este es un Mensaje de Prueba', {
+      variant: 'success',
+      anchorOrigin: {
+        vertical: 'top',
+        horizontal: 'center',
+      },
+    })
+  }
 
   return (
     <Box>
-      {usuario
-        ? toast.success(`Bienvenido ${usuario.nombres} ${usuario.apellidos}.`, {
-            duration: 6000,
-            icon: '🎉',
-          })
-        : ''}
-
       <h1>Dashboard</h1>
-      <Toaster toastOptions={{ position: 'top-center' }} />
+      <Button onClick={handleClick}>Open simple snackbar</Button>
     </Box>
   )
 }
