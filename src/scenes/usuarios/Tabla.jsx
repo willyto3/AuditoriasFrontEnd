@@ -1,19 +1,22 @@
-// ? IMPORTACIÓN DE COMPONENTES
-import { Box, Avatar, useTheme, Typography } from '@mui/material'
-import CircularProgress from '@mui/material/CircularProgress'
+// ? IMPORTACIÓN DE PAQUETES
 import { DataGrid } from '@mui/x-data-grid'
-import Header from '../../components/Header'
-// Importamos las funciones de registroUsuario
 import { useMemo } from 'react'
 
+// ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
+import { Box, Avatar, useTheme, Typography } from '@mui/material'
+import CircularProgress from '@mui/material/CircularProgress'
 
+// ? IMPORTACION DE COMPONENTES
+import Header from '../../components/Header'
 import Acciones from './Acciones'
+
+// ? IMPORTACION DE HOOKS
 import { useUsuarios } from '../../hooks/useUsuarios'
 
 const Tabla = () => {
+  // ? USO DE PAQUETES
   // Query para buscar todos los Usuarios
-  const { data, isLoading, isError, error } = useUsuarios()
-
+  const { data: usuarios, isLoading, isError, error } = useUsuarios()
   // Uso del Tema
   const tema = useTheme()
 
@@ -54,7 +57,6 @@ const Tabla = () => {
   )
 
   // ? FUNCIONES
-
   // Se verifica si se esta cargando la información
   if (isLoading) {
     return (
@@ -109,7 +111,7 @@ const Tabla = () => {
         <DataGrid
           loading={isLoading}
           getRowId={row => row._id}
-          rows={data || []}
+          rows={usuarios || []}
           columns={columns}
           initialState={{
             pagination: {

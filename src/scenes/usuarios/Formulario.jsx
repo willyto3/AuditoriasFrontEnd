@@ -1,7 +1,5 @@
 // ? IMPORTACIÓN DE MODULOS
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import IconButton from '@mui/material/IconButton'
-import CloseIcon from '@mui/icons-material/Close'
 import {
   Alert,
   Box,
@@ -34,7 +32,6 @@ const Formulario = () => {
   // ? FUNCIONES
   // Funcion para registrar un usuario
   const registrarUsuario = async (values, onsubmitProps) => {
-    console.log(values)
     // this allows us to send form info with image
     const formData = new FormData()
 
@@ -44,7 +41,6 @@ const Formulario = () => {
 
     formData.append('picturePath', values.picture.name)
 
-    console.log(formData)
     anadirUsuario(formData)
     enqueueSnackbar(
       `Se creo el Auditor ${values.nombres} ${values.apellidos}`,
@@ -64,24 +60,6 @@ const Formulario = () => {
   const manejoInput = event => {
     setCargo(event.target.value)
   }
-
- 
-
-  const action = (
-    <>
-      <Button color='secondary' size='small' onClick={handleClose}>
-        UNDO
-      </Button>
-      <IconButton
-        size='small'
-        aria-label='close'
-        color='inherit'
-        onClick={handleClose}
-      >
-        <CloseIcon fontSize='small' />
-      </IconButton>
-    </>
-  )
 
   // ? USE STATE
   const [cargo, setCargo] = useState('')

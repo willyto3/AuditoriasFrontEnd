@@ -1,17 +1,20 @@
-// ? IMPORTACIÓN DE MODULOS
+// ? IMPORTACIÓN DE PAQUETES
+import { PropTypes } from 'prop-types'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+
+
+// ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
 import {
   AdminPanelSettingsOutlined,
-  CalendarMonthOutlined,
   ChevronLeft,
   ChevronRightOutlined,
   Groups2Outlined,
   HomeOutlined,
-  PieChartOutlined,
   PointOfSaleOutlined,
   ReceiptLongOutlined,
   SettingsOutlined,
   TodayOutlined,
-  TrendingUpOutlined,
 } from '@mui/icons-material'
 import {
   Box,
@@ -26,9 +29,6 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import { PropTypes } from 'prop-types'
-import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
 
 // ? IMPORTACIÓN DE COMPONENTES
 import FlexBetween from '../components/FlexBetween'

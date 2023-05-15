@@ -1,3 +1,4 @@
+// ? IMPORTACIÓN DE PAQUETES
 // Importación del modulo Axios
 import axios from 'axios'
 
@@ -22,6 +23,13 @@ export const obtenerTodosLosUsuarios = async () => {
   return response.data
 }
 
+// ? OBTENER UN USUARIO
+// Se crea y exporta la Función para obtener todos los usuarios
+export const obtenerUnUsuario = async id => {
+  const response = await usuariosAPI.get(`${userUrlEndPoint}/${id}`)
+  return response.data
+}
+
 // ? CREAR UN USUARIO
 // Se crea y exporta la Función para añadir un usuario
 export const registroUsuario = async formData => {
@@ -34,16 +42,17 @@ export const registroUsuario = async formData => {
 
 // ? ELIMINAR UN USUARIO
 // Se crea y exporta la Función para eliminar un usuario
-export const eliminarUsuario = async _id => {
-  const response = await usuariosAPI.delete(userUrlEndPoint, {
-    data: { _id },
+export const eliminarUsuario = async id => {
+  const response = await usuariosAPI.delete(`${userUrlEndPoint}/${id}`, {
+    data: { id },
   })
 
   return response.data
 }
 
+// ? ACTUALIZAR UN USUARIO
 // Se crea y exporta la Función para actualizar un usuario
-export const updateUser = async ({
+export const actualizarUsuario = async ({
   id,
   nombres,
   apellidos,
@@ -52,9 +61,8 @@ export const updateUser = async ({
   contrasena,
   cargo,
   picturePath,
-  isActive,
 }) => {
-  const response = await usuariosAPI.patch(userUrlEndPoint, {
+  const response = await usuariosAPI.patch(`${userUrlEndPoint}/${id}`, {
     id,
     nombres,
     apellidos,
@@ -63,7 +71,8 @@ export const updateUser = async ({
     contrasena,
     cargo,
     picturePath,
-    isActive,
   })
   return response.data
 }
+
+export default usuariosAPI
