@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
+import { tokens } from '../theme'
 
 // ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
 import {
@@ -33,6 +34,9 @@ import {
 // ? IMPORTACIÓN DE COMPONENTES
 import FlexBetween from '../components/FlexBetween'
 import { auditoriaStore } from '../store/auditoriaStore'
+
+
+
 
 const navItems = [
   {
@@ -85,6 +89,9 @@ const SideBar = ({
   const navigate = useNavigate()
   const theme = useTheme()
 
+  // Creamos constantes para los colores
+const colors = tokens(theme.palette.mode)
+
   const [active, setActive] = useState('')
   useEffect(() => {
     setActive(pathname.substring(1))
@@ -102,7 +109,7 @@ const SideBar = ({
             width: drawerWidth,
             '& .MuiDrawer-paper': {
               color: theme.palette.secondary[200],
-              backgroundColor: theme.palette.background.alt,
+              backgroundColor: colors.primary[400],
               boxSixing: 'border-box',
               borderWidth: pantallaCompleta ? 0 : '2px',
               width: drawerWidth,
@@ -187,24 +194,14 @@ const SideBar = ({
                 sx={{ objectFit: 'cover' }}
               />
               <Box textAlign='left'>
-                <Typography
-                  fontWeight='bold'
-                  fontSize='0.9rem'
-                  sx={{ color: theme.palette.secondary[100] }}
-                >
+                <Typography fontWeight='bold' fontSize='0.9rem'>
                   {usuario.nombres} {usuario.apellidos}
                 </Typography>
-                <Typography
-                  fontWeight='bold'
-                  fontSize='0.8rem'
-                  sx={{ color: theme.palette.secondary[200] }}
-                >
+                <Typography fontWeight='bold' fontSize='0.8rem'>
                   {usuario.cargo}
                 </Typography>
               </Box>
-              <SettingsOutlined
-                sx={{ color: theme.palette.secondary[300], fontSize: '25px' }}
-              />
+              <SettingsOutlined sx={{ fontSize: '25px' }} />
             </FlexBetween>
           </Box>
         </Drawer>

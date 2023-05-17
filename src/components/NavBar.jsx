@@ -25,19 +25,19 @@ import MenuIcon from '@mui/icons-material/Menu'
 // Se Importa el componente FlexBetween
 import { auditoriaStore } from '../store/auditoriaStore'
 import FlexBetween from './FlexBetween'
+import { tokens } from '../theme'
 
 // ? COMIENZO DEL COMPONENTE
 const NavBar = () => {
-
   // ? FUNCIONES
   // Usamos el PathName
   const { pathname } = useLocation()
   // Usamos la navegacion
   const navigate = useNavigate()
   // se usa la tienda para elegir el valor del tema
-  const setEleccionTema = auditoriaStore(state => state.setEleccionTema)
+  const setMode = auditoriaStore(state => state.setMode)
   // Uso del Tema
-  const tema = useTheme()
+  const theme = useTheme()
 
   // ? USE STATE
   // Estado para saber si se encuentra activo el enlace de una pagina
@@ -67,8 +67,7 @@ const NavBar = () => {
     'ingresa',
   ]
   // Creamos constantes para los colores
-  const neutralLigth = tema.palette.neutral.light
-  const dark = tema.palette.neutral.dark
+  const colors = tokens(theme.palette.mode)
 
   // Creamos la pestaña que va a aparecer en el menu Movil
   const pestana = (
@@ -81,7 +80,6 @@ const NavBar = () => {
           sx={{
             my: 2,
             '&:hover': {
-              color: tema.palette.primary.main,
               cursor: 'pointer',
             },
           }}
@@ -113,7 +111,6 @@ const NavBar = () => {
                   sx={{
                     flexGrow: 1,
                     '&:hover': {
-                      color: tema.palette.primary.main,
                       cursor: 'pointer',
                     },
                   }}
@@ -127,11 +124,10 @@ const NavBar = () => {
       </List>
 
       {/* //? BOTON PARA CAMBIAR EL TEMA */}
-      <IconButton onClick={() => setEleccionTema()}>
-        {tema.palette.mode === 'dark' ? (
+      <IconButton onClick={() => setMode()}>
+        {theme.palette.mode === 'dark' ? (
           <LightMode
             sx={{
-              color: dark,
               fontSize: '20px',
               '&:hover': {
                 color: '#f39f18',
@@ -144,7 +140,6 @@ const NavBar = () => {
             sx={{
               fontSize: '20px',
               '&:hover': {
-                color: '#3c688e',
                 cursor: 'pointer',
               },
             }}
@@ -175,17 +170,15 @@ const NavBar = () => {
         {pestana}
       </Drawer>
 
-      <FlexBetween padding='1rem 6%' backgroundColor={neutralLigth}>
+      <FlexBetween padding='1rem 6%' backgroundColor={colors.primary[400]}>
         <Typography
           fontWeight='bold'
           fontSize='clamp(2rem, 2rem, 3.3rem)'
           lineHeight='1'
           component='div'
-          color={dark}
           sx={{
             flexGrow: 1,
             '&:hover': {
-              color: tema.palette.primary.main,
               cursor: 'pointer',
             },
           }}
@@ -195,7 +188,6 @@ const NavBar = () => {
         </Typography>
 
         <IconButton
-          color='inherit'
           aria-label='open drawer'
           edge='start'
           onClick={manejarPestana}
@@ -209,7 +201,6 @@ const NavBar = () => {
           {enlacesNavegacion.map(item => (
             <Button
               key={item}
-              sx={{ color: dark }}
               onClick={() => {
                 navigate(item === 'inicio' ? '/' : `/${item}`)
                 setActivo(item)
@@ -220,7 +211,6 @@ const NavBar = () => {
                 sx={{
                   flexGrow: 1,
                   '&:hover': {
-                    color: tema.palette.primary.main,
                     cursor: 'pointer',
                   },
                 }}
@@ -232,11 +222,10 @@ const NavBar = () => {
         </Box>
 
         {/* //? BOTON PARA CAMBIAR EL TEMA */}
-        <IconButton onClick={() => setEleccionTema()}>
-          {tema.palette.mode === 'oscuro' ? (
+        <IconButton onClick={() => setMode()}>
+          {theme.palette.mode === 'dark' ? (
             <LightMode
               sx={{
-                color: dark,
                 fontSize: '25px',
                 display: { xs: 'none', sm: 'flex' },
                 '&:hover': {
@@ -251,7 +240,6 @@ const NavBar = () => {
                 fontSize: '20px',
                 display: { xs: 'none', sm: 'flex' },
                 '&:hover': {
-                  color: '#3c688e',
                   cursor: 'pointer',
                 },
               }}

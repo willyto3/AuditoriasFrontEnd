@@ -8,10 +8,10 @@ export const auditoriaStore = create(
   persist(
     set => ({
       // Tema de la pagina
-      eleccionTema: 'claro',
-      setEleccionTema: () =>
+      mode: 'light',
+      setMode: () =>
         set(state => ({
-          eleccionTema: state.eleccionTema === 'claro' ? 'oscuro' : 'claro',
+          mode: state.mode === 'light' ? 'dark' : 'light',
         })),
       // Token del Usuario
       token: '',

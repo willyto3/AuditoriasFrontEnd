@@ -16,16 +16,16 @@ import { auditoriaStore } from '../store/auditoriaStore'
 const Root = () => {
   // ? FUNCIONES
   // se usa la tienda para elegir el valor del tema
-  const eleccionTema = auditoriaStore(state => state.eleccionTema)
+  const mode = auditoriaStore(state => state.mode)
   // Funcion para cambiar el Tema
-  const tema = useMemo(
-    () => createTheme(themeSettings(eleccionTema)),
-    [eleccionTema]
+  const theme = useMemo(
+    () => createTheme(themeSettings(mode)),
+    [mode]
   )
 
   // ? VISUALIZACION
   return (
-    <ThemeProvider theme={tema}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Outlet />
     </ThemeProvider>
