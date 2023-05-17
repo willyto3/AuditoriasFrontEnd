@@ -9,6 +9,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 // ? IMPORTACION DE COMPONENTES
 import Header from '../../components/Header'
 import Acciones from './Acciones'
+import { auditoriaStore } from '../../store/auditoriaStore'
 
 // ? IMPORTACION DE HOOKS
 import { useUsuarios } from '../../hooks/useUsuarios'
@@ -19,6 +20,8 @@ const Tabla = () => {
   const { data: usuarios, isLoading, isError, error } = useUsuarios()
   // Uso del Tema
   const tema = useTheme()
+  // se usa la tienda para conocer el valor del usuario
+  const usuario = auditoriaStore(state => state.usuario)
 
   // Columnas de la tabla de Auditores
   const columns = useMemo(
@@ -45,11 +48,19 @@ const Tabla = () => {
       },
       { field: 'email', headerName: 'Email', flex: 1 },
       { field: 'cargo', headerName: 'Cargo', flex: 1 },
+      { field: 'rol', headerName: 'Rol', flex: 1 },
+
+      {
+        field: 'estaActivo',
+        type: 'boolean',
+        headerName: 'Activo',
+        width: 100,
+      },
       {
         field: 'actions',
         headerName: 'Acciones',
         type: 'actions',
-        width: 150,
+        width: 100,
         renderCell: params => <Acciones {...{ params }} />,
       },
     ],

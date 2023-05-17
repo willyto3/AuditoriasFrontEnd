@@ -1,5 +1,5 @@
 // ? IMPORTACIÓN DE COMPONENTES
-import { useQuery, useMutation } from 'react-query'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
 
 // Importamos las funciones de API
 import {
@@ -10,8 +10,10 @@ import {
   eliminarUsuario,
 } from '../api/users'
 
+const key = 'busquedaUsuarios'
+
 export const useUsuarios = () => {
-  return useQuery('busquedaUsuarios', obtenerTodosLosUsuarios)
+  return useQuery(key, obtenerTodosLosUsuarios)
 }
 
 export const useUsuario = id => {
@@ -19,13 +21,40 @@ export const useUsuario = id => {
 }
 
 export const useRegistroUsuario = () => {
-  return useMutation('registroUsuario', registroUsuario)
+  const queryClient = useQueryClient()
+  return useMutation('registroUsuario', registroUsuario, {
+    onSuccess: usuario => {
+      queryClient.setQueryData([
+        key,
+        prevUsuarios => prevUsuarios.concat(usuario),
+      ])
+      queryClient.invalidateQueries([key])
+    },
+  })
 }
 
 export const useActualizarUsuario = () => {
-  return useMutation('actualizarUsuario', actualizarUsuario)
+  const queryClient = useQueryClient()
+  return useMutation('actualizarUsuario', actualizarUsuario, {
+    onSuccess: usuario => {
+      queryClient.setQueryData([
+        key,
+        prevUsuarios => prevUsuarios.concat(usuario),
+      ])
+      queryClient.invalidateQueries([key])
+    },
+  })
 }
 
 export const useEliminarUsuario = id => {
-  return useMutation('eliminarUsuario', eliminarUsuario)
+  const queryClient = useQueryClient()
+  return useMutation('eliminarUsuario', eliminarUsuario, {
+    onSuccess: usuario => {
+      queryClient.setQueryData([
+        key,
+        prevUsuarios => prevUsuarios.concat(usuario),
+      ])
+      queryClient.invalidateQueries([key])
+    },
+  })
 }

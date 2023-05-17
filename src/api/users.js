@@ -33,10 +33,7 @@ export const obtenerUnUsuario = async id => {
 // ? CREAR UN USUARIO
 // Se crea y exporta la Función para añadir un usuario
 export const registroUsuario = async formData => {
-  const response = await usuariosAPI.post(
-    `${userUrlEndPoint}/registrousuario`,
-    formData
-  )
+  const response = await usuariosAPI.post(`${userUrlEndPoint}`, formData)
   return response.data
 }
 
