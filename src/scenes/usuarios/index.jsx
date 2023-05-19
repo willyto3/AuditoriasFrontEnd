@@ -1,14 +1,14 @@
 import { Box, Grid } from '@mui/material'
 
-import Header from '../../components/Header'
 import Tabla from './Tabla'
+import Header from '../../components/Header'
 
 const Usuarios = () => {
   return (
-    <Box m='1rem 1.5rem'>
-      <Header title='Auditores' />
+    <Box m='0 0.5rem'>
+      <Header title='Auditores' subtitle='Listado de Auditores'/>
       <Grid container>
-        <Grid item md={11}>
+        <Grid item md={12}>
           <Tabla />
         </Grid>
       </Grid>

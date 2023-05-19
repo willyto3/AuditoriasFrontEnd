@@ -1,7 +1,13 @@
-// ? IMPORTACIÓN DE MODULOS
+// ? IMPORTACIÓN DE PAQUETES
+import { Form, Formik } from 'formik'
+import { useState } from 'react'
+import Dropzone from 'react-dropzone'
+import { useSnackbar } from 'notistack'
+import { useNavigate } from 'react-router-dom'
+
+// ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import {
-  Alert,
   Box,
   Button,
   TextField,
@@ -9,26 +15,25 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import { useSnackbar } from 'notistack'
 import MenuItem from '@mui/material/MenuItem'
-import { Form, Formik } from 'formik'
-import { useState } from 'react'
-import Dropzone from 'react-dropzone'
-import { useNavigate } from 'react-router-dom'
 
 // ? IMPORTACIÓN DE COMPONENTES
 import FlexBetween from '../../components/FlexBetween'
-import Header from '../../components/Header'
 // Importamos el esquema del formulario de Usuario
 import { esquemaIngreso, opcionesCargo, valoresIniciales } from './esquema'
 import { useRegistroUsuario } from '../../hooks/useUsuarios'
+import { tokens } from '../../theme'
 
+// ! COMIENZO DEL COMPONENTE
 const Formulario = () => {
   const { enqueueSnackbar } = useSnackbar()
-  const { palette } = useTheme()
   const navigate = useNavigate()
   const pantallaCompleta = useMediaQuery('(min-width:600px')
   const { mutate: anadirUsuario } = useRegistroUsuario()
+  const theme = useTheme()
+  // Creamos constantes para los colores
+  const colors = tokens(theme.palette.mode)
+
   // ? FUNCIONES
   // Funcion para registrar un usuario
   const registrarUsuario = async (values, onsubmitProps) => {
@@ -63,11 +68,9 @@ const Formulario = () => {
 
   // ? USE STATE
   const [cargo, setCargo] = useState('')
-  const [errorIngreso, setErrorIngreso] = useState('')
 
   return (
     <Box m='1rem 1rem'>
-      <Header subtitle='Registro de Auditores' />
       <Formik
         onSubmit={registrarUsuario}
         initialValues={valoresIniciales}
@@ -83,12 +86,13 @@ const Formulario = () => {
           handleChange,
           handleSubmit,
           setFieldValue,
+          resetForm,
         }) => (
           <Form onSubmit={handleSubmit}>
             <Box
               display='grid'
               gap='30px'
-              gridTemplateColumns='repeat(4,minmax(0,1fr))'
+              gridTemplateColumns='repeat(4,minmax(0, 1fr))'
               sx={{
                 '& >div': {
                   gridColumn: pantallaCompleta ? undefined : 'span 4',
@@ -96,6 +100,7 @@ const Formulario = () => {
               }}
             >
               <TextField
+                required
                 label='Nombres'
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -103,9 +108,15 @@ const Formulario = () => {
                 name='nombres'
                 error={Boolean(touched.nombres) && Boolean(errors.nombres)}
                 helperText={touched.nombres && errors.nombres}
-                sx={{ gridColumn: 'span 4' }}
+                color='secondary'
+                backgroundColor='transparent'
+                inputProps={{
+                  style: { color: colors.greenAccent[500], fontSize: '20px' },
+                }}
+                sx={{ gridColumn: 'span 2', fontSize: '18px' }}
               />
               <TextField
+                required
                 label='Apellidos'
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -113,9 +124,15 @@ const Formulario = () => {
                 name='apellidos'
                 error={Boolean(touched.apellidos) && Boolean(errors.apellidos)}
                 helperText={touched.apellidos && errors.apellidos}
-                sx={{ gridColumn: 'span 4' }}
+                color='secondary'
+                backgroundColor='transparent'
+                inputProps={{
+                  style: { color: colors.greenAccent[500], fontSize: '20px' },
+                }}
+                sx={{ gridColumn: 'span 2' }}
               />
               <TextField
+                required
                 label='Documento'
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -123,9 +140,15 @@ const Formulario = () => {
                 name='documento'
                 error={Boolean(touched.documento) && Boolean(errors.documento)}
                 helperText={touched.documento && errors.documento}
-                sx={{ gridColumn: 'span 4' }}
+                color='secondary'
+                backgroundColor='transparent'
+                inputProps={{
+                  style: { color: colors.greenAccent[500], fontSize: '20px' },
+                }}
+                sx={{ gridColumn: 'span 2' }}
               />
               <TextField
+                required
                 label='Email'
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -133,15 +156,15 @@ const Formulario = () => {
                 name='email'
                 error={Boolean(touched.email) && Boolean(errors.email)}
                 helperText={touched.email && errors.email}
-                sx={{ gridColumn: 'span 4' }}
+                color='secondary'
+                backgroundColor='transparent'
+                inputProps={{
+                  style: { color: colors.greenAccent[500], fontSize: '20px' },
+                }}
+                sx={{ gridColumn: 'span 2' }}
               />
 
-              <Box
-                gridColumn='span 4'
-                border={`1px solid ${palette.neutral.medium}`}
-                borderRadius='5px'
-                p='1rem'
-              >
+              <Box gridColumn='span 2'>
                 <Dropzone
                   acceptedFiles='.jpg,.jpeg,.png'
                   multiple={false}
@@ -152,15 +175,17 @@ const Formulario = () => {
                   {({ getRootProps, getInputProps }) => (
                     <Box
                       {...getRootProps()}
-                      border={`2px dashed ${palette.primary.main}`}
+                      borderRadius='5px'
+                      border={`2px dashed ${colors.grey[100]}`}
                       sx={{ '&:hover': { cursor: 'pointer' } }}
+                      p='0 1rem'
                     >
                       <input {...getInputProps()} />
                       {!values.picture ? (
                         <p>Elija la foto de Perfil</p>
                       ) : (
                         <FlexBetween>
-                          <Typography>{values.picture.name}</Typography>
+                          <p>{values.picture.name}</p>
                           <EditOutlinedIcon />
                         </FlexBetween>
                       )}
@@ -170,6 +195,7 @@ const Formulario = () => {
               </Box>
 
               <TextField
+                required
                 select
                 label='Selecciona el Cargo'
                 type='text'
@@ -179,7 +205,12 @@ const Formulario = () => {
                 name='cargo'
                 error={Boolean(touched.cargo) && Boolean(errors.cargo)}
                 helperText={touched.cargo && errors.cargo}
-                sx={{ gridColumn: 'span 4' }}
+                color='secondary'
+                backgroundColor='transparent'
+                inputProps={{
+                  style: { color: colors.greenAccent[500], fontSize: '20px' },
+                }}
+                sx={{ gridColumn: 'span 2' }}
               >
                 {opcionesCargo.map(item => (
                   <MenuItem key={item} value={item}>
@@ -189,6 +220,7 @@ const Formulario = () => {
               </TextField>
 
               <TextField
+                required
                 label='Contraseña'
                 type='password'
                 onBlur={handleBlur}
@@ -199,9 +231,15 @@ const Formulario = () => {
                   Boolean(touched.contrasena) && Boolean(errors.contrasena)
                 }
                 helperText={touched.contrasena && errors.contrasena}
-                sx={{ gridColumn: 'span 4' }}
+                color='secondary'
+                backgroundColor='transparent'
+                inputProps={{
+                  style: { color: colors.greenAccent[500], fontSize: '20px' },
+                }}
+                sx={{ gridColumn: 'span 2' }}
               />
               <TextField
+                required
                 label='Confirmar Contraseña'
                 type='password'
                 onBlur={handleBlur}
@@ -215,38 +253,53 @@ const Formulario = () => {
                 helperText={
                   touched.confirmarContrasena && errors.confirmarContrasena
                 }
-                sx={{ gridColumn: 'span 4' }}
+                color='secondary'
+                backgroundColor='transparent'
+                inputProps={{
+                  style: { color: colors.greenAccent[500], fontSize: '20px' },
+                }}
+                sx={{ gridColumn: 'span 2' }}
               />
             </Box>
 
             {/* BUTTONS */}
-            <Box>
+            <Box
+              display='grid'
+              gap='30px'
+              gridTemplateColumns='repeat(4,minmax(0, 1fr))'
+              sx={{
+                '& >div': {
+                  gridColumn: pantallaCompleta ? undefined : 'span 4',
+                },
+              }}
+            >
               <Button
-                fullWidth
-                type='submit'
+                onClick={resetForm}
                 sx={{
+                  gridColumn: 'span 2',
                   m: '2rem 0',
                   p: '1rem',
-                  backgroundColor: palette.primary.main,
-                  color: palette.background.alt,
-                  '&:hover': { color: palette.primary.main },
+                  backgroundColor: colors.greenAccent[500],
+                  color: colors.primary[500],
+                  '&:hover': { color: colors.blueAccent[300] },
                 }}
               >
-                REGISTRO
+                <Typography variant='h5'>LIMPIAR FORMULARIO</Typography>
               </Button>
-              {errorIngreso ? (
-                <Alert
-                  severity='error'
-                  sx={{ mb: '2rem', fontSize: 'large' }}
-                  onClose={() => {
-                    setErrorIngreso('')
-                  }}
-                >
-                  {errorIngreso}
-                </Alert>
-              ) : (
-                ''
-              )}
+
+              <Button
+                type='submit'
+                sx={{
+                  gridColumn: 'span 2',
+                  m: '2rem 0',
+                  p: '1rem',
+                  backgroundColor: colors.greenAccent[500],
+                  color: colors.primary[500],
+                  '&:hover': { color: colors.redAccent[400] },
+                }}
+              >
+                <Typography variant='h5'>REGISTRO</Typography>
+              </Button>
             </Box>
           </Form>
         )}

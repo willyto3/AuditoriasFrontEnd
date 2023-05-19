@@ -1,9 +1,9 @@
 // ? IMPORTACIÓN DE PAQUETES
-import * as React from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 // ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
-import { Box, IconButton, Tooltip } from '@mui/material'
+import { Box, IconButton, Tooltip, useTheme } from '@mui/material'
 import { Delete, Preview } from '@mui/icons-material'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
@@ -14,12 +14,21 @@ import DialogTitle from '@mui/material/DialogTitle'
 
 // ? IMPORTACIÓN DE COMPONENTES
 import { useEliminarUsuario } from '../../hooks/useUsuarios'
+import { auditoriaStore } from '../../store/auditoriaStore'
+import { tokens } from '../../theme'
 
 const Acciones = ({ params }) => {
   // ? USO DE PAQUETES
   const navigate = useNavigate()
   const { mutate: eliminarUsuario } = useEliminarUsuario()
-  const [open, setOpen] = React.useState(false)
+  // se usa la tienda para conocer el valor del usuario
+  const usuario = auditoriaStore(state => state.usuario)
+    // Uso del Tema
+    const theme = useTheme()
+    // Creamos constantes para los colores
+    const colors = tokens(theme.palette.mode)
+
+  const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -28,6 +37,7 @@ const Acciones = ({ params }) => {
   const handleClose = () => {
     setOpen(false)
   }
+
 
   return (
     <Box>
@@ -59,11 +69,14 @@ const Acciones = ({ params }) => {
           <Preview />
         </IconButton>
       </Tooltip>
-      <Tooltip title='Eliminar Auditor'>
-        <IconButton onClick={handleClickOpen}>
-          <Delete />
-        </IconButton>
-      </Tooltip>
+
+      {usuario.rol !== 'Usuario' && (
+        <Tooltip title='Eliminar Auditor'>
+          <IconButton onClick={handleClickOpen}>
+            <Delete sx={{ color: colors.redAccent[400] }}/>
+          </IconButton>
+        </Tooltip>
+      )}
     </Box>
   )
 }

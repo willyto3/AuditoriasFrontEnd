@@ -38,6 +38,8 @@ const NavBar = () => {
   const setMode = auditoriaStore(state => state.setMode)
   // Uso del Tema
   const theme = useTheme()
+  // Creamos constantes para los colores
+  const colors = tokens(theme.palette.mode)
 
   // ? USE STATE
   // Estado para saber si se encuentra activo el enlace de una pagina
@@ -66,8 +68,6 @@ const NavBar = () => {
     'contactanos',
     'ingresa',
   ]
-  // Creamos constantes para los colores
-  const colors = tokens(theme.palette.mode)
 
   // Creamos la pestaña que va a aparecer en el menu Movil
   const pestana = (
@@ -77,10 +77,12 @@ const NavBar = () => {
         <Typography
           fontWeight='bold'
           fontSize='max(2rem, 1.2vw)'
+          color={colors.grey[100]}
           sx={{
             my: 2,
             '&:hover': {
               cursor: 'pointer',
+              color:colors.greenAccent[400]
             },
           }}
         >
@@ -107,11 +109,14 @@ const NavBar = () => {
             >
               <ListItemText>
                 <Typography
-                  fontSize='max(0.9rem, 1.2vw)'
+                  fontSize='max(2rem, 3vw)'
+                  color={colors.grey[100]}
+                  textTransform='capitalize'
                   sx={{
                     flexGrow: 1,
                     '&:hover': {
                       cursor: 'pointer',
+                      color:colors.greenAccent[400]
                     },
                   }}
                 >
@@ -173,13 +178,15 @@ const NavBar = () => {
       <FlexBetween padding='1rem 6%' backgroundColor={colors.primary[400]}>
         <Typography
           fontWeight='bold'
-          fontSize='clamp(2rem, 2rem, 3.3rem)'
+          fontSize='clamp(2.3rem, 2rem, 3.3rem)'
           lineHeight='1'
           component='div'
+          color={colors.grey[100]}
           sx={{
             flexGrow: 1,
             '&:hover': {
               cursor: 'pointer',
+              color:colors.greenAccent[400]
             },
           }}
           onClick={() => navigate('/')}
@@ -207,11 +214,13 @@ const NavBar = () => {
               }}
             >
               <Typography
-                fontSize='max(0.9rem, 1.2vw)'
+                fontSize='max(1rem, 1.2vw)'
+                color={colors.grey[100]}
                 sx={{
                   flexGrow: 1,
                   '&:hover': {
                     cursor: 'pointer',
+                    color:colors.greenAccent[400]
                   },
                 }}
               >

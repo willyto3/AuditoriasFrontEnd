@@ -6,10 +6,10 @@ import Formulario from './Formulario'
 
 const RegistroUsuario = () => {
   return (
-    <Box m='1rem 1.5rem'>
-      <Header title='Auditores' />
+    <Box>
+      <Header title='Auditores' subtitle='Crear Auditor'/>
       <Grid container>
-        <Grid item md={6}>
+        <Grid item md={12} m='0 2rem'>
           <Formulario />
         </Grid>
       </Grid>

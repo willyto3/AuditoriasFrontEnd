@@ -1,18 +1,17 @@
-// ? IMPORTACIÓN DE MODULOS
+// ? IMPORTACIÓN DE PAQUETES
+import { useState } from 'react'
+// Se Importa el Use Navigate de React Router
+import { useNavigate } from 'react-router-dom'
+
+// ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
 import {
   ArrowDropDownOutlined,
   DarkModeOutlined,
   LightModeOutlined,
-  Menu as MenuIcon,
   Search,
   SettingsOutlined,
 } from '@mui/icons-material'
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined'
-import { PropTypes } from 'prop-types'
-import { useState } from 'react'
-// Se Importa el Use Navigate de React Router
-import { useNavigate } from 'react-router-dom'
-import { useTheme } from '@emotion/react'
 import {
   AppBar,
   Box,
@@ -23,13 +22,16 @@ import {
   MenuItem,
   Toolbar,
   Typography,
+  useTheme,
 } from '@mui/material'
 
 // ? IMPORTACIÓN DE COMPONENTES
 import { auditoriaStore } from '../store/auditoriaStore'
 import FlexBetween from './FlexBetween'
+import { tokens } from '../theme'
 
-const NavBarProtegida = ({ abiertaSideBar, setAbiertaSideBar }) => {
+// ! COMIENZO DEL COMPONENTE
+const NavBarProtegida = () => {
   // se usa la tienda para elegir el tema
   const setMode = auditoriaStore(state => state.setMode)
   // se usa la tienda para conocer el valor del usuario
@@ -38,6 +40,8 @@ const NavBarProtegida = ({ abiertaSideBar, setAbiertaSideBar }) => {
   const logout = auditoriaStore(state => state.logout)
   // Uso del Tema
   const theme = useTheme()
+  // Creamos constantes para los colores
+  const colors = tokens(theme.palette.mode)
   // Usamos la navegacion
   const navigate = useNavigate()
 
@@ -52,11 +56,8 @@ const NavBarProtegida = ({ abiertaSideBar, setAbiertaSideBar }) => {
     <AppBar sx={{ position: 'static', background: 'none', boxShadow: 'none' }}>
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         <FlexBetween>
-          <IconButton onClick={() => setAbiertaSideBar(!abiertaSideBar)}>
-            <MenuIcon />
-          </IconButton>
           <FlexBetween
-            backgroundColor={theme.palette.background.alt}
+            backgroundColor={colors.greenAccent[600]}
             borderRadius='9px'
             gap='4rem'
             p='0.1rem 1.5rem'
@@ -106,10 +107,14 @@ const NavBarProtegida = ({ abiertaSideBar, setAbiertaSideBar }) => {
                 sx={{ objectFit: 'cover' }}
               />
               <Box textAlign='left'>
-                <Typography fontWeight='bold' fontSize='0.85rem'>
+                <Typography
+                  fontWeight='bold'
+                  variant='h5'
+                  color={colors.grey[100]}
+                >
                   {usuario.nombres} {usuario.apellidos}
                 </Typography>
-                <Typography fontWeight='bold' fontSize='0.75rem'>
+                <Typography variant='h6' color={colors.greenAccent[500]}>
                   {usuario.cargo}
                 </Typography>
               </Box>
@@ -137,8 +142,3 @@ const NavBarProtegida = ({ abiertaSideBar, setAbiertaSideBar }) => {
   )
 }
 export default NavBarProtegida
-
-NavBarProtegida.propTypes = {
-  abiertaSideBar: PropTypes.bool,
-  setAbiertaSideBar: PropTypes.any,
-}

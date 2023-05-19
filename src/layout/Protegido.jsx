@@ -20,8 +20,6 @@ const Protegido = () => {
   // Se define la pantalla completa
   const pantallaCompleta = useMediaQuery('(min-width:600px)')
 
-  const [abiertaSideBar, setAbiertaSideBar] = useState(true)
-
   if (token === '') {
     return <Navigate to='/' />
   }
@@ -32,17 +30,9 @@ const Protegido = () => {
       width='100%'
       height='100%'
     >
-      <SideBar
-        pantallaCompleta={pantallaCompleta}
-        drawerWidth='250px'
-        abiertaSideBar={abiertaSideBar}
-        setAbiertaSideBar={setAbiertaSideBar}
-      />
+      <SideBar />
       <Box flexGrow={1}>
-        <NavBarProtegida
-          abiertaSideBar={abiertaSideBar}
-          setAbiertaSideBar={setAbiertaSideBar}
-        />
+        <NavBarProtegida />
         <Outlet />
       </Box>
     </Box>

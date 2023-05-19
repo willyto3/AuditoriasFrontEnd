@@ -11,6 +11,8 @@ import { RouterProvider } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from 'react-query'
 // Importacion del SnackbarProvider
 import { SnackbarProvider, closeSnackbar } from 'notistack'
+// Importacion del provider del sideBar
+import { ProSidebarProvider } from 'react-pro-sidebar'
 
 // ? IMPORTACIÓN DE ELEMENTOS
 // Importacion del Router
@@ -28,22 +30,24 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <SnackbarProvider
-        maxSnack={3}
-        autoHideDuration={6000}
-        action={snackbarId => (
-          <IconButton
-            size='small'
-            aria-label='close'
-            color='inherit'
-            onClick={() => closeSnackbar(snackbarId)}
-          >
-            <CloseIcon fontSize='small' />
-          </IconButton>
-        )}
-      >
-        <RouterProvider router={router} />
-      </SnackbarProvider>
+      <ProSidebarProvider>
+        <SnackbarProvider
+          maxSnack={3}
+          autoHideDuration={6000}
+          action={snackbarId => (
+            <IconButton
+              size='small'
+              aria-label='close'
+              color='inherit'
+              onClick={() => closeSnackbar(snackbarId)}
+            >
+              <CloseIcon fontSize='small' />
+            </IconButton>
+          )}
+        >
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </ProSidebarProvider>
     </QueryClientProvider>
   </React.StrictMode>
 )

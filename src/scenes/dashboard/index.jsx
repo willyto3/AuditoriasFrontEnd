@@ -4,6 +4,7 @@ import { useSnackbar } from 'notistack'
 
 // ? IMPORTACIÓN DE COMPONENTES
 // import { auditoriaStore } from '../../store/auditoriaStore'
+import Header from '../../components/Header'
 
 const DashBoard = () => {
   const { enqueueSnackbar } = useSnackbar()
@@ -23,7 +24,7 @@ const DashBoard = () => {
 
   return (
     <Box>
-      <h1>Dashboard</h1>
+      <Header title='Dashboard' subtitle='Bienvenido a tu Dashboard' />
       <Button onClick={handleClick}>Open simple snackbar</Button>
     </Box>
   )

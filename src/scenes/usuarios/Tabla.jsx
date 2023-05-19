@@ -1,71 +1,28 @@
 // ? IMPORTACIÓN DE PAQUETES
-import { DataGrid } from '@mui/x-data-grid'
-import { useMemo } from 'react'
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 
 // ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
-import { Box, Avatar, useTheme, Typography } from '@mui/material'
+import { Box, useTheme, Typography } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 
 // ? IMPORTACION DE COMPONENTES
-import Header from '../../components/Header'
-import Acciones from './Acciones'
-import { auditoriaStore } from '../../store/auditoriaStore'
+import { tokens } from '../../theme'
+import columnas from './columnas'
 
 // ? IMPORTACION DE HOOKS
 import { useUsuarios } from '../../hooks/useUsuarios'
 
+// ! COMIENZO DEL COMPONENTE
 const Tabla = () => {
   // ? USO DE PAQUETES
   // Query para buscar todos los Usuarios
   const { data: usuarios, isLoading, isError, error } = useUsuarios()
   // Uso del Tema
-  const tema = useTheme()
-  // se usa la tienda para conocer el valor del usuario
-  const usuario = auditoriaStore(state => state.usuario)
+  const theme = useTheme()
+  // Creamos constantes para los colores
+  const colors = tokens(theme.palette.mode)
 
-  // Columnas de la tabla de Auditores
-  const columns = useMemo(
-    () => [
-      {
-        field: 'picturePath',
-        headerName: 'Avatar',
-        width: '100',
-        renderCell: params => (
-          <Avatar
-            src={`http://localhost:5001/images/${params.row.picturePath}`}
-          />
-        ),
-        sortable: false,
-        filterable: false,
-      },
-      { field: 'documento', headerName: 'Documento', flex: 0.5 },
-      {
-        field: 'fullName',
-        headerName: 'Nombre Completo',
-        flex: 1,
-        valueGetter: params =>
-          `${params.row.nombres || ''} ${params.row.apellidos || ''}`,
-      },
-      { field: 'email', headerName: 'Email', flex: 1 },
-      { field: 'cargo', headerName: 'Cargo', flex: 1 },
-      { field: 'rol', headerName: 'Rol', flex: 1 },
-
-      {
-        field: 'estaActivo',
-        type: 'boolean',
-        headerName: 'Activo',
-        width: 100,
-      },
-      {
-        field: 'actions',
-        headerName: 'Acciones',
-        type: 'actions',
-        width: 100,
-        renderCell: params => <Acciones {...{ params }} />,
-      },
-    ],
-    []
-  )
+  const columns = columnas()
 
   // ? FUNCIONES
   // Se verifica si se esta cargando la información
@@ -89,8 +46,7 @@ const Tabla = () => {
   }
 
   return (
-    <Box m='1.5rem 2.5rem'>
-      <Header subtitle='Listado de Auditores' />
+    <Box m='0 2rem'>
       <Box
         mt='40px'
         height='75vh'
@@ -100,22 +56,34 @@ const Tabla = () => {
           },
           '& .MuiDataGrid-cell': {
             borderBottom: 'none',
+            fontSize: '18px',
+          },
+          '.name-column--cell': {
+            color: colors.greenAccent[300],
           },
           '& .MuiDataGrid-columnHeaders': {
             borderBottom: 'none',
-            backgroundColor: tema.palette.background.alt,
-            color: tema.palette.secondary[100],
+            backgroundColor: colors.blueAccent[700],
+          },
+          '& .MuiDataGrid-columnHeaderTitle': {
+            fontSize: '18px',
+            textTransform: 'uppercase',
           },
           '& .MuiDataGrid-virtualScroller': {
-            backgroundColor: tema.palette.primary.light,
+            backgroundColor: colors.primary[400],
           },
           '& .MuiDataGrid-footerContainer': {
             borderTop: 'none',
-            backgroundColor: tema.palette.background.alt,
-            color: tema.palette.secondary[100],
+            backgroundColor: colors.blueAccent[700],
           },
-          '& .MuiDataGrid-toolbarContainer .MuiDataGrid-text': {
-            color: `${tema.palette.secondary[200]} !important`,
+          '&	.MuiDataGrid-footerCell': {
+            fontSize: '18px',
+          },
+          '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
+            color: `${colors.grey[100]} !important`,
+          },
+          '& .MuiCheckbox-root': {
+            color: `${colors.greenAccent[200]} !important`,
           },
         }}
       >
@@ -124,6 +92,7 @@ const Tabla = () => {
           getRowId={row => row._id}
           rows={usuarios || []}
           columns={columns}
+          slots={{ toolbar: GridToolbar }}
           initialState={{
             pagination: {
               paginationModel: {

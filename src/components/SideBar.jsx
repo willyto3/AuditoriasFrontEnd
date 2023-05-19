@@ -1,219 +1,209 @@
 // ? IMPORTACIÓN DE PAQUETES
 import { PropTypes } from 'prop-types'
-import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-
-import { tokens } from '../theme'
+import { useNavigate } from 'react-router-dom'
+import { Sidebar, Menu, MenuItem, useProSidebar } from 'react-pro-sidebar'
+import { useState } from 'react'
 
 // ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
-import {
-  AdminPanelSettingsOutlined,
-  ChevronLeft,
-  ChevronRightOutlined,
-  Groups2Outlined,
-  HomeOutlined,
-  PointOfSaleOutlined,
-  ReceiptLongOutlined,
-  SettingsOutlined,
-  TodayOutlined,
-} from '@mui/icons-material'
-import {
-  Box,
-  Divider,
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
+import { ChevronLeft, ReceiptLongOutlined } from '@mui/icons-material'
+import { Box, Typography, useTheme } from '@mui/material'
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
+import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined'
 
 // ? IMPORTACIÓN DE COMPONENTES
-import FlexBetween from '../components/FlexBetween'
 import { auditoriaStore } from '../store/auditoriaStore'
-
-
-
+import { tokens } from '../theme'
 
 const navItems = [
   {
-    text: 'Dashboard',
-    icon: <HomeOutlined />,
+    title: 'Dashboard',
+    to: '/dashboard',
+    icon: <HomeOutlinedIcon />,
   },
   {
-    text: 'Auditores',
+    title: 'Auditores',
     icon: null,
   },
   {
-    text: 'Listado',
-    icon: <Groups2Outlined />,
+    title: 'Listado Auditores',
+    to: 'listado',
+    icon: <PeopleOutlinedIcon />,
   },
   {
-    text: 'Registro',
+    title: 'Registro Auditores',
+    to: 'registro',
     icon: <ReceiptLongOutlined />,
   },
   {
-    text: 'Sales',
+    title: 'Clientes',
     icon: null,
   },
   {
-    text: 'Overview',
-    icon: <PointOfSaleOutlined />,
+    title: 'Listado Clientes',
+    to: 'listado',
+    icon: <PeopleOutlinedIcon />,
   },
   {
-    text: 'Daily',
-    icon: <TodayOutlined />,
-  },
-  {
-    text: 'Management',
-    icon: null,
-  },
-  {
-    text: 'Admin',
-    icon: <AdminPanelSettingsOutlined />,
+    title: 'Registro Clientes',
+    to: 'registro',
+    icon: <ReceiptLongOutlined />,
   },
 ]
 
-const SideBar = ({
-  drawerWidth,
-  abiertaSideBar,
-  setAbiertaSideBar,
-  pantallaCompleta,
-}) => {
+const SideBar = () => {
   // se usa la tienda para conocer el valor del usuario
   const usuario = auditoriaStore(state => state.usuario)
-  const { pathname } = useLocation()
   const navigate = useNavigate()
   const theme = useTheme()
+  const { collapseSidebar, collapsed } = useProSidebar()
 
   // Creamos constantes para los colores
-const colors = tokens(theme.palette.mode)
+  const colors = tokens(theme.palette.mode)
 
-  const [active, setActive] = useState('')
-  useEffect(() => {
-    setActive(pathname.substring(1))
-  }, [pathname])
+  const [selected, setSelected] = useState('dashboard')
+
+  const Item = ({ title, to, icon, selected }) => {
+    return (
+      <MenuItem
+        active={selected === title}
+        style={{ color: colors.grey[100] }}
+        onClick={() => {
+          setSelected(title)
+          navigate(to)
+        }}
+        icon={icon}
+      >
+        <Typography color={colors.grey[100]}>{title}</Typography>
+      </MenuItem>
+    )
+  }
 
   return (
-    <Box component='nav'>
-      {abiertaSideBar && (
-        <Drawer
-          open={abiertaSideBar}
-          onClose={() => setAbiertaSideBar(false)}
-          variant='persistent'
-          anchor='left'
-          sx={{
-            width: drawerWidth,
-            '& .MuiDrawer-paper': {
-              color: theme.palette.secondary[200],
-              backgroundColor: colors.primary[400],
-              boxSixing: 'border-box',
-              borderWidth: pantallaCompleta ? 0 : '2px',
-              width: drawerWidth,
-            },
-          }}
-        >
-          <Box width='100%'>
-            <Box m='1.5rem 2rem 2rem 3rem'>
-              <FlexBetween color={theme.palette.secondary.main}>
-                <Box display='flex' alignItems='center' gap='0.5rem'>
-                  <Typography variant='h4' fontWeight='bold'>
-                    AUDITORIAS PAULA
-                  </Typography>
-                </Box>
-                {pantallaCompleta && (
-                  <IconButton
-                    onClick={() => setAbiertaSideBar(!abiertaSideBar)}
-                  >
-                    <ChevronLeft />
-                  </IconButton>
-                )}
-              </FlexBetween>
-            </Box>
-            <List>
-              {navItems.map(({ text, icon }) => {
-                if (!icon) {
-                  return (
-                    <Typography key={text} sx={{ m: '2.25rem 0 1rem 3rem' }}>
-                      {text}
-                    </Typography>
-                  )
-                }
-                const lcText = text.toLowerCase()
-                return (
-                  <ListItem key={text} disablePadding>
-                    <ListItemButton
-                      onClick={() => {
-                        navigate(
-                          lcText === 'dashboard' ? '/dashboard' : `${lcText}`
-                        )
-                        setActive(lcText)
-                      }}
-                      sx={{
-                        backgroundColor:
-                          active === lcText
-                            ? theme.palette.secondary[300]
-                            : 'transparent',
-                      }}
-                    >
-                      <ListItemIcon
-                        sx={{
-                          ml: '2rem',
-                          color:
-                            active === lcText
-                              ? theme.palette.primary[600]
-                              : theme.palette.secondary[200],
-                        }}
-                      >
-                        {icon}
-                      </ListItemIcon>
-                      <ListItemText primary={text} />
-                      {active === lcText && (
-                        <ChevronRightOutlined sx={{ ml: 'auto' }} />
-                      )}
-                    </ListItemButton>
-                  </ListItem>
-                )
-              })}
-            </List>
-          </Box>
-
-          <Box position='absolute' bottom='2rem'>
-            <Divider />
-            <FlexBetween textTransform='none' gap='1rem' m='1.5rem 2rem 0 3rem'>
+    <Box
+      sx={{
+        position: 'sticky',
+        display: 'flex',
+        height: '100vh',
+        top: 0,
+        bottom: 0,
+        zIndex: 10000,
+        '& .sidebar': {
+          border: 'none',
+        },
+        '& .ps-menu-icon': {
+          backgroundColor: 'transparent !important',
+        },
+        '& .ps.menu-item': {
+          backgroundColor: 'transparent !important',
+        },
+        '& .ps-menu-anchor': {
+          color: 'inherit !important',
+          backgroundColor: 'transparent !important',
+        },
+        '& .ps-menu-item:hover': {
+          color: `${colors.blueAccent[500]} !important`,
+          backgroundColor: 'transparent !important',
+        },
+        '& .ps-menu-item.ps-active': {
+          color: `${colors.greenAccent[500]} !important`,
+          backgroundColor: 'transparent !important',
+        },
+      }}
+    >
+      <Sidebar backgroundColor={colors.primary[400]}>
+        <Menu iconShape='square'>
+          {/* LOGO AND MENU ICON */}
+          <MenuItem
+            onClick={() => collapseSidebar()}
+            icon={collapsed ? <MenuOutlinedIcon /> : undefined}
+            style={{
+              margin: '10px 0 10px 0',
+            }}
+          >
+            {!collapsed && (
               <Box
-                component='img'
-                alt='profile'
-                src={`http://localhost:5001/images/${usuario.picturePath}`}
-                height='40px'
-                width='40px'
-                borderRadius='50%'
-                sx={{ objectFit: 'cover' }}
-              />
-              <Box textAlign='left'>
-                <Typography fontWeight='bold' fontSize='0.9rem'>
+                display='flex'
+                justifyContent='space-between'
+                alignItems='center'
+                ml='20px'
+              >
+                <Typography variant='h4'>AUDITORIAS PAULA </Typography>
+                <ChevronLeft />
+              </Box>
+            )}
+          </MenuItem>
+
+          {!collapsed ? (
+            <Box mb='15px'>
+              <Box display='flex' justifyContent='center' alignItems='center'>
+                <img
+                  alt='profile-user'
+                  width='140px'
+                  height='150px'
+                  src={`http://localhost:5001/images/${usuario.picturePath}`}
+                  style={{ cursor: 'pointer', borderRadius: '40px' }}
+                />
+              </Box>
+              <Box textAlign='center'>
+                <Typography
+                  variant='h5'
+                  fontWeight='bold'
+                  color={colors.grey[100]}
+                  sx={{ m: '10px 0 0 0' }}
+                >
                   {usuario.nombres} {usuario.apellidos}
                 </Typography>
-                <Typography fontWeight='bold' fontSize='0.8rem'>
+                <Typography variant='h5' color={colors.greenAccent[400]}>
                   {usuario.cargo}
                 </Typography>
               </Box>
-              <SettingsOutlined sx={{ fontSize: '25px' }} />
-            </FlexBetween>
+            </Box>
+          ) : (
+            <Box
+              component='img'
+              alt='profile'
+              src={`http://localhost:5001/images/${usuario.picturePath}`}
+              height='40px'
+              width='40px'
+              borderRadius='50%'
+              sx={{ objectFit: 'cover', m: '5px 0 5px 15px' }}
+            />
+          )}
+
+          <Box paddingLeft={collapsed ? undefined : '10%'}>
+            {navItems.map(({ title, to, icon }) => {
+              if (!icon) {
+                return (
+                  <Typography
+                    key={title}
+                    variant='h6'
+                    color={colors.greenAccent[300]}
+                    sx={{ m: '10px 0 5px 10px' }}
+                  >
+                    {title}
+                  </Typography>
+                )
+              }
+              return (
+                <Item
+                  key={title}
+                  title={title}
+                  to={to}
+                  icon={icon}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )
+            })}
           </Box>
-        </Drawer>
-      )}
+        </Menu>
+      </Sidebar>
     </Box>
   )
 }
 export default SideBar
 
 SideBar.propTypes = {
-  abiertaSideBar: PropTypes.bool,
-  setAbiertaSideBar: PropTypes.any,
-  drawerWidth: PropTypes.string,
-  pantallaCompleta: PropTypes.bool,
+  title: PropTypes.string,
 }
