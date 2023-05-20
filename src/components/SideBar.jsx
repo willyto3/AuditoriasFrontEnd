@@ -41,7 +41,7 @@ const navItems = [
   },
   {
     title: 'Listado Clientes',
-    to: 'listado',
+    to: 'clientlist',
     icon: <PeopleOutlinedIcon />,
   },
   {

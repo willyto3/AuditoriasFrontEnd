@@ -1,4 +1,9 @@
-// ? IMPORTACIÓN DE MODULOS
+// ? IMPORTACIÓN DE PAQUETES
+import { Formik } from 'formik'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+// ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
 import {
   Alert,
   Box,
@@ -8,24 +13,25 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import { Formik } from 'formik'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 // ? IMPORTACIÓN DE COMPONENTES
 // Importamos el esquema del formulario de Usuario
 import { esquemaIngreso, valoresIniciales } from './esquema'
 // Importamos la tienda
 import { auditoriaStore } from '../../store/auditoriaStore'
+import { tokens } from '../../theme'
 
+// ! COMIENZO DEL COMPONENTE
 const Formulario = () => {
   // se usa la tienda para darle valor al token
   const setToken = auditoriaStore(state => state.setToken)
   // se usa la tienda para darle valor al usuario
   const setUsuario = auditoriaStore(state => state.setUsuario)
 
-  const { palette } = useTheme()
+  const theme = useTheme()
   const navigate = useNavigate()
+  // Creamos constantes para los colores
+  const colors = tokens(theme.palette.mode)
   const pantallaCompleta = useMediaQuery('(min-width:600px')
 
   // ? USE STATE
@@ -57,7 +63,7 @@ const Formulario = () => {
   const manejoBoton = async (values, onsubmitProps) => {
     await ingreso(values, onsubmitProps)
   }
-  
+
   return (
     <Formik
       onSubmit={manejoBoton}
@@ -117,9 +123,9 @@ const Formulario = () => {
               sx={{
                 m: '2rem 0',
                 p: '1rem',
-                backgroundColor: palette.primary.main,
-                color: palette.background.alt,
-                '&:hover': { color: palette.primary.main },
+                backgroundColor: colors.greenAccent[400],
+                color: colors.grey[100],
+                '&:hover': { color: colors.redAccent[400] },
               }}
             >
               LOGIN
@@ -144,10 +150,10 @@ const Formulario = () => {
               }}
               sx={{
                 textDecoration: 'underline',
-                color: palette.primary.main,
+                color: colors.grey[100],
                 '&:hover': {
                   cursor: 'pointer',
-                  color: palette.primary.light,
+                  color: colors.greenAccent[400],
                 },
               }}
             >

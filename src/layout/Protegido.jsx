@@ -1,8 +1,6 @@
 // ? IMPORTACIÓN DE PAQUETES
 // Importacion de Outlet de React Router
 import { Navigate, Outlet } from 'react-router-dom'
-// Importamos useMemo de React
-import { useState } from 'react'
 // Importamos CssBaseLine, Theme Provider y createTheme de mui Material
 import { Box, useMediaQuery } from '@mui/material'
 

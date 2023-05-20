@@ -1,4 +1,4 @@
-// ? IMPORTACIÓN DE COMPONENTES
+// ? IMPORTACIÓN DE PAQUETES
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 
 // Importamos las funciones de API

@@ -22,6 +22,7 @@ import Usuario from '../scenes/usuarios/Usuario'
 import Nosotros from '../scenes/nosotros'
 import Servicios from '../scenes/servicios'
 import Contactanos from '../scenes/contactanos'
+import Clients from '../scenes/clients'
 
 // Función Router
 export const router = createBrowserRouter(
@@ -39,6 +40,7 @@ export const router = createBrowserRouter(
         <Route path='listado' element={<Usuarios />}/>
         <Route path='registro' element={<RegistroUsuario />} />
         <Route path='usuario/:id' element={<Usuario />} />
+        <Route path='clientlist' element={<Clients />}/>
       </Route>
     </Route>
   )
