@@ -2,7 +2,7 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 
 // Importamos las funciones de API
-import { getAllClients } from '../api/clients'
+import { getAllClients, getAClient } from '../api/clients'
 
 const key = 'getAllClients'
 
@@ -10,9 +10,9 @@ export const useClients = () => {
   return useQuery(key, getAllClients)
 }
 
-// export const useUsuario = id => {
-//   return useQuery(['busquedaUsuario', id], () => obtenerUnUsuario(id))
-// }
+export const useClient = id => {
+  return useQuery(['getAClient', id], () => getAClient(id))
+}
 
 // export const useRegistroUsuario = () => {
 //   const queryClient = useQueryClient()

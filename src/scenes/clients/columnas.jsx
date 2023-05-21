@@ -10,6 +10,7 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined'
 import { auditoriaStore } from '../../store/auditoriaStore'
 import Acciones from './Acciones'
 import { tokens } from '../../theme'
+import CreatedBy from './CreatedBy'
 
 const columnas = () => {
   // se usa la tienda para conocer el valor del usuario
@@ -23,6 +24,8 @@ const columnas = () => {
 
   const columns = useMemo(
     () => [
+      { field: '_id', headerName: 'ID' },
+
       {
         field: 'picturePath',
         headerName: 'Avatar',
@@ -43,16 +46,11 @@ const columnas = () => {
         cellClassName: 'name-column--cell',
       },
       { field: 'email', headerName: 'Email', flex: 0.5 },
-
       {
-        field: 'picturePath',
-        headerName: 'Avatar',
-        width: '100',
-        renderCell: params => (
-          <Avatar
-            src={`http://localhost:5001/images/${params.row.picturePath}`}
-          />
-        ),
+        field: 'avatar',
+        headerName: 'Creado por:',
+        flex: 0.4,
+        renderCell: params => <CreatedBy {...{ params }} />,
         sortable: false,
         filterable: false,
       },

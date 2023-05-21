@@ -23,12 +23,12 @@ export const getAllClients = async () => {
   return response.data
 }
 
-// // ? OBTENER UN USUARIO
-// // Se crea y exporta la Función para obtener todos los usuarios
-// export const obtenerUnUsuario = async id => {
-//   const response = await clientsAPI.get(`${userUrlEndPoint}/${id}`)
-//   return response.data
-// }
+// ? OBTENER UN CLIENTE
+// Se crea y exporta la Función para obtener un Cliente
+export const getAClient = async id => {
+  const response = await clientsAPI.get(`${userUrlEndPoint}/${id}`)
+  return response.data
+}
 
 // // ? CREAR UN USUARIO
 // // Se crea y exporta la Función para añadir un usuario

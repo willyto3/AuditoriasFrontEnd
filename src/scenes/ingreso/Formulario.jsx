@@ -2,6 +2,7 @@
 import { Formik } from 'formik'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSnackbar } from 'notistack'
 
 // ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
 import {
@@ -23,6 +24,7 @@ import { tokens } from '../../theme'
 
 // ! COMIENZO DEL COMPONENTE
 const Formulario = () => {
+  const { enqueueSnackbar } = useSnackbar()
   // se usa la tienda para darle valor al token
   const setToken = auditoriaStore(state => state.setToken)
   // se usa la tienda para darle valor al usuario
@@ -52,11 +54,31 @@ const Formulario = () => {
     if (ingresado.ok) {
       setToken(ingresado.token)
       setUsuario(ingresado.usuario)
+      enqueueSnackbar(
+        `Bienvenido Nuevamente ${ingresado.usuario.nombres} ${ingresado.usuario.apellidos}`,
+        {
+          variant: 'success',
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'center',
+          },
+        }
+      )
 
       onsubmitProps.resetForm()
       navigate('/dashboard')
     } else {
       setErrorIngreso(ingresado.mensaje)
+      enqueueSnackbar(
+        `Error al Registrarse.`,
+        {
+          variant: 'error',
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'center',
+          },
+        }
+      )
     }
   }
 

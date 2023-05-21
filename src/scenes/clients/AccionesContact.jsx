@@ -4,8 +4,6 @@ import { useState } from 'react'
 // ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
 import { Box, IconButton, Tooltip, useTheme } from '@mui/material'
 import { Delete } from '@mui/icons-material'
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -18,17 +16,13 @@ import { useEliminarUsuario } from '../../hooks/useUsuarios'
 import { auditoriaStore } from '../../store/auditoriaStore'
 import { tokens } from '../../theme'
 
-const Acciones = ({ params }) => {
+const ContactActions = ({ params }) => {
   // ? USO DE PAQUETES
   const { mutate: eliminarUsuario } = useEliminarUsuario()
   // se usa la tienda para conocer el valor del usuario
   const usuario = auditoriaStore(state => state.usuario)
   // se usa la tienda para conocer el valor del usuario
   const token = auditoriaStore(state => state.token)
-  // se usa la tienda para conocer el valor del id
-  const setId = auditoriaStore(state => state.setId)
-  // se usa la tienda para conocer el valor del id
-  const id = auditoriaStore(state => state.id)
   // Uso del Tema
   const theme = useTheme()
   // Creamos constantes para los colores
@@ -55,7 +49,7 @@ const Acciones = ({ params }) => {
         <DialogTitle id='alert-dialog-title'>{'Eliminar Auditor'}</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
-            ¿Esta Seguro de Eliminar este Contacto del Cliente?.
+            ¿Esta Seguro de Eliminar este Auditor?.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -65,25 +59,6 @@ const Acciones = ({ params }) => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Tooltip title='Mostrar Contactos'>
-        {id === params?.id ? (
-          <IconButton
-            onClick={() => {
-              setId('')
-            }}
-          >
-            <VisibilityOffOutlinedIcon />
-          </IconButton>
-        ) : (
-          <IconButton
-            onClick={() => {
-              setId(params?.id)
-            }}
-          >
-            <VisibilityOutlinedIcon />
-          </IconButton>
-        )}
-      </Tooltip>
 
       {usuario.rol !== 'Usuario' && (
         <Tooltip title='Eliminar Cliente'>
@@ -96,4 +71,4 @@ const Acciones = ({ params }) => {
   )
 }
 
-export default Acciones
+export default ContactActions

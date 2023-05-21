@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom'
 
 // ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
 import { Box, IconButton, Tooltip, useTheme } from '@mui/material'
-import { Delete, Preview } from '@mui/icons-material'
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
+import { Delete } from '@mui/icons-material'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -68,7 +69,7 @@ const Acciones = ({ params }) => {
             navigate(`/dashboard/usuario/${params.id}`)
           }}
         >
-          <Preview />
+          <VisibilityOutlinedIcon />
         </IconButton>
       </Tooltip>
 

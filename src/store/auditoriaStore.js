@@ -7,17 +7,19 @@ import { persist } from 'zustand/middleware'
 export const auditoriaStore = create(
   persist(
     set => ({
-      // Tema de la pagina
+      // ? TEMA DE LA PÁGINA
       mode: 'light',
       setMode: () =>
         set(state => ({
           mode: state.mode === 'light' ? 'dark' : 'light',
         })),
-      // Token del Usuario
+
+      // ? TOKEN DEL USUARIO
       token: '',
       estaAutorizado: false,
       setToken: token => set(state => ({ token, estaAutorizado: true })),
-      // Datos del Usuario
+
+      // ? DATOS DEL USUARIO
       usuario: '',
       setUsuario: usuario => set(state => ({ usuario })),
       logout: () =>
@@ -25,6 +27,19 @@ export const auditoriaStore = create(
           token: '',
           estaAutorizado: false,
           usuario: '',
+        })),
+
+      // ? ID CLIENTE
+      id: '',
+      filter: {
+        items: [{ field: '_id', operator: 'contains', value: '' }],
+      },
+      setId: id =>
+        set(state => ({
+          id,
+          filter: {
+            items: [{ field: '_id', operator: 'contains', value: `${id}` }],
+          },
         })),
     }),
 

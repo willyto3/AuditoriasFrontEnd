@@ -48,7 +48,7 @@ const Tabla = () => {
   return (
     <Box m='0 2rem'>
       <Box
-        mt='40px'
+        mt='10px'
         height='75vh'
         sx={{
           '& .MuiDataGrid-root': {
@@ -93,11 +93,15 @@ const Tabla = () => {
           rows={usuarios || []}
           columns={columns}
           slots={{ toolbar: GridToolbar }}
+          density='comfortable'
           initialState={{
             pagination: {
               paginationModel: {
                 pageSize: 10,
               },
+            },
+            sorting: {
+              sortModel: [{ field: 'fullName', sort: 'asc' }],
             },
           }}
           pageSizeOptions={[10, 15, 20]}
