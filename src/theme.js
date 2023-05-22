@@ -17,7 +17,7 @@ export const tokens = mode => ({
           100: '#d0d1d5',
           200: '#a1a4ab',
           300: '#727681',
-          400: '#1F2A40',
+          400: '#1D1D42',
           500: '#141b2d',
           600: '#101624',
           700: '#0c101b',
@@ -160,32 +160,36 @@ export const themeSettings = mode => {
           }),
     },
     typography: {
-      fontFamily: ['Source Sans Pro', 'sans-serif'].join(','),
-      fontSize: 12,
+      fontFamily: ['Murecho', 'sans-serif'].join(','),
+      fontSize: '1rem',
       h1: {
-        fontFamily: ['Source Sans Pro', 'sans-serif'].join(','),
-        fontSize: 40,
+        fontFamily: ['Murecho', 'sans-serif'].join(','),
+        fontSize: '4rem',
       },
       h2: {
-        fontFamily: ['Source Sans Pro', 'sans-serif'].join(','),
-        fontSize: 32,
+        fontFamily: ['Murecho', 'sans-serif'].join(','),
+        fontSize: '3rem',
       },
       h3: {
-        fontFamily: ['Source Sans Pro', 'sans-serif'].join(','),
-        fontSize: 24,
+        fontFamily: ['Murecho', 'sans-serif'].join(','),
+        fontSize: '2rem',
       },
       h4: {
-        fontFamily: ['Source Sans Pro', 'sans-serif'].join(','),
-        fontSize: 20,
+        fontFamily: ['Murecho', 'sans-serif'].join(','),
+        fontSize: '1.5rem',
       },
       h5: {
-        fontFamily: ['Source Sans Pro', 'sans-serif'].join(','),
-        fontSize: 16,
+        fontFamily: ['Murecho', 'sans-serif'].join(','),
+        fontSize: '1.2rem',
       },
       h6: {
-        fontFamily: ['Source Sans Pro', 'sans-serif'].join(','),
-        fontSize: 14,
+        fontFamily: ['Murecho', 'sans-serif'].join(','),
+        fontSize: '1rem',
       },
+      caption:{
+        fontFamily: ['Murecho', 'sans-serif'].join(','),
+        fontSize: '0.7rem',
+      }
     },
   }
 }

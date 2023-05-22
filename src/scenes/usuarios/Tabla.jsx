@@ -56,7 +56,7 @@ const Tabla = () => {
           },
           '& .MuiDataGrid-cell': {
             borderBottom: 'none',
-            fontSize: '18px',
+            fontSize: '20px',
           },
           '.name-column--cell': {
             color: colors.greenAccent[300],
@@ -75,9 +75,6 @@ const Tabla = () => {
           '& .MuiDataGrid-footerContainer': {
             borderTop: 'none',
             backgroundColor: colors.blueAccent[700],
-          },
-          '&	.MuiDataGrid-footerCell': {
-            fontSize: '18px',
           },
           '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
             color: `${colors.grey[100]} !important`,

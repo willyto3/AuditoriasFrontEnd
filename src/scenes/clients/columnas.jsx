@@ -38,18 +38,18 @@ const columnas = () => {
         sortable: false,
         filterable: false,
       },
-      { field: 'NIT', headerName: 'NIT', flex: 0.5 },
+      { field: 'NIT', headerName: 'NIT', flex: 0.4 },
       {
         field: 'name',
         headerName: 'Nombre de la Empresa',
-        flex: 1,
+        flex: 0.9,
         cellClassName: 'name-column--cell',
       },
       { field: 'email', headerName: 'Email', flex: 0.5 },
       {
         field: 'avatar',
         headerName: 'Creado por:',
-        flex: 0.4,
+        flex: 0.6,
         renderCell: params => <CreatedBy {...{ params }} />,
         sortable: false,
         filterable: false,
@@ -58,7 +58,7 @@ const columnas = () => {
       usuario.rol !== 'Usuario' && {
         field: 'isActive',
         headerName: 'Activo',
-        width: 80,
+        flex: 0.3,
         renderCell: ({ row: { isActive } }) => {
           return (
             <Box
@@ -70,11 +70,11 @@ const columnas = () => {
             >
               {isActive && (
                 <CheckCircleOutlineIcon
-                  sx={{ color: colors.greenAccent[500] }}
+                  sx={{ color: colors.greenAccent[500], fontSize: '1.5rem' }}
                 />
               )}
               {!isActive && (
-                <CancelOutlinedIcon sx={{ color: colors.redAccent[400] }} />
+                <CancelOutlinedIcon sx={{ color: colors.redAccent[400], fontSize: '1.5rem' }} />
               )}
             </Box>
           )
@@ -85,7 +85,7 @@ const columnas = () => {
         field: 'actions',
         headerName: 'Acciones',
         type: 'actions',
-        width: 100,
+        flex: 0.4,
         renderCell: params => <Acciones {...{ params }} />,
       },
     ],

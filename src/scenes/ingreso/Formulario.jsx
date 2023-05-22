@@ -21,6 +21,7 @@ import { esquemaIngreso, valoresIniciales } from './esquema'
 // Importamos la tienda
 import { auditoriaStore } from '../../store/auditoriaStore'
 import { tokens } from '../../theme'
+import { ingresoUsuario } from '../../api/users'
 
 // ! COMIENZO DEL COMPONENTE
 const Formulario = () => {
@@ -40,16 +41,7 @@ const Formulario = () => {
   const [errorIngreso, setErrorIngreso] = useState('')
 
   const ingreso = async (values, onsubmitProps) => {
-    const respuestaIngreso = await fetch(
-      'http://localhost:5001/api/v1/usuarios/ingresousuario',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
-      }
-    )
-
-    const ingresado = await respuestaIngreso.json()
+    const ingresado = await ingresoUsuario(values)
 
     if (ingresado.ok) {
       setToken(ingresado.token)
@@ -69,16 +61,13 @@ const Formulario = () => {
       navigate('/dashboard')
     } else {
       setErrorIngreso(ingresado.mensaje)
-      enqueueSnackbar(
-        `Error al Registrarse.`,
-        {
-          variant: 'error',
-          anchorOrigin: {
-            vertical: 'top',
-            horizontal: 'center',
-          },
-        }
-      )
+      enqueueSnackbar(`${ingresado.mensaje}`, {
+        variant: 'error',
+        anchorOrigin: {
+          vertical: 'top',
+          horizontal: 'center',
+        },
+      })
     }
   }
 

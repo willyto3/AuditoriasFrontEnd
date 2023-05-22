@@ -53,9 +53,9 @@ const ContactActions = ({ params }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>No</Button>
+          <Button onClick={handleClose}>Cancelar</Button>
           <Button onClick={() => eliminarUsuario(params.id, token)} autoFocus>
-            Si
+            Eliminar
           </Button>
         </DialogActions>
       </Dialog>
@@ -63,7 +63,7 @@ const ContactActions = ({ params }) => {
       {usuario.rol !== 'Usuario' && (
         <Tooltip title='Eliminar Cliente'>
           <IconButton onClick={handleClickOpen}>
-            <Delete sx={{ color: colors.redAccent[400] }} />
+            <Delete sx={{ color: colors.redAccent[400], fontSize: '1.5rem' }} />
           </IconButton>
         </Tooltip>
       )}

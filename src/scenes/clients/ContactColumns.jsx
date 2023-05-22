@@ -44,7 +44,7 @@ const contactColumns = () => {
         field: 'actions',
         headerName: 'Acciones',
         type: 'actions',
-        width: 100,
+        flex: 0.5,
         renderCell: params => <ContactActions {...{ params }} />,
       },
     ],

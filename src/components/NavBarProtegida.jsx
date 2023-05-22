@@ -64,7 +64,7 @@ const NavBarProtegida = () => {
           >
             <InputBase placeholder='Buscar...' />
             <IconButton>
-              <Search />
+              <Search sx={{ fontSize: '1.5rem' }}/>
             </IconButton>
           </FlexBetween>
         </FlexBetween>
@@ -72,18 +72,18 @@ const NavBarProtegida = () => {
         <FlexBetween gap='1rem'>
           <IconButton onClick={() => setMode()}>
             {theme.palette.mode === 'dark' ? (
-              <LightModeOutlined sx={{ fontSize: '25px' }} />
+              <LightModeOutlined sx={{ fontSize: '1.5rem' }} />
             ) : (
-              <DarkModeOutlined sx={{ ontSize: '25px' }} />
+              <DarkModeOutlined sx={{ fontSize: '1.5rem' }} />
             )}
           </IconButton>
 
           <IconButton>
-            <NotificationsOutlinedIcon sx={{ fontSize: '25px' }} />
+            <NotificationsOutlinedIcon sx={{ fontSize: '1.5rem' }} />
           </IconButton>
 
           <IconButton>
-            <SettingsOutlined sx={{ fontSize: '25px' }} />
+            <SettingsOutlined sx={{ fontSize: '1.5rem' }} />
           </IconButton>
 
           <FlexBetween>
@@ -118,7 +118,7 @@ const NavBarProtegida = () => {
                   {usuario.cargo}
                 </Typography>
               </Box>
-              <ArrowDropDownOutlined sx={{ fontSize: '25px' }} />
+              <ArrowDropDownOutlined sx={{ fontSize: '1.5rem' }} />
             </Button>
             <Menu
               anchorEl={anchorEl}

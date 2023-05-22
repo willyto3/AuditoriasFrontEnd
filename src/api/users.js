@@ -16,6 +16,20 @@ const usuariosAPI = axios.create({
 // Se crea y exporta el enlace para conectar a los usuarios
 export const userUrlEndPoint = '/usuarios'
 
+// ? INGRESO DE UN USUARIO
+// Se crea y exporta la funcion para manejar el ingreso de un usuario
+export const ingresoUsuario = async values => {
+  try {
+    const response = await usuariosAPI.post(
+      `${userUrlEndPoint}/ingresousuario`,
+      values
+    )
+    return response.data
+  } catch (error) {
+    return error.response.data
+  }
+}
+
 // ? OBTENER TODOS LOS USUARIOS
 // Se crea y exporta la Función para obtener todos los usuarios
 export const obtenerTodosLosUsuarios = async () => {

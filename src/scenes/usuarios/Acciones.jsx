@@ -41,7 +41,6 @@ const Acciones = ({ params }) => {
     setOpen(false)
   }
 
-
   return (
     <Box>
       <Dialog
@@ -57,9 +56,11 @@ const Acciones = ({ params }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>No</Button>
-          <Button onClick={() => eliminarUsuario(params.id, token)} autoFocus>
-            Si
+          <Button onClick={handleClose} autoFocus>
+            Cancelar
+          </Button>
+          <Button onClick={() => eliminarUsuario(params.id, token)}>
+            Eliminar
           </Button>
         </DialogActions>
       </Dialog>
@@ -69,14 +70,14 @@ const Acciones = ({ params }) => {
             navigate(`/dashboard/usuario/${params.id}`)
           }}
         >
-          <VisibilityOutlinedIcon />
+          <VisibilityOutlinedIcon sx={{ fontSize: '1.5rem' }} />
         </IconButton>
       </Tooltip>
 
       {usuario.rol !== 'Usuario' && (
         <Tooltip title='Eliminar Auditor'>
           <IconButton onClick={handleClickOpen}>
-            <Delete sx={{ color: colors.redAccent[400] }}/>
+            <Delete sx={{ color: colors.redAccent[400], fontSize: '1.5rem' }} />
           </IconButton>
         </Tooltip>
       )}

@@ -12,7 +12,7 @@ const Header = ({ title, subtitle }) => {
   return (
     <Box ml='3rem'>
       <Typography
-        variant='h2'
+        variant='h3'
         color={colors.grey[100]}
         fontWeight='bold'
         textTransform='uppercase'
@@ -21,9 +21,8 @@ const Header = ({ title, subtitle }) => {
         {title}
       </Typography>
       <Typography
-        variant='h5'
+        variant='h4'
         color={colors.greenAccent[400]}
-        fontWeight='bold'
         textTransform='capitalize'
         sx={{ mb: '5px' }}
       >

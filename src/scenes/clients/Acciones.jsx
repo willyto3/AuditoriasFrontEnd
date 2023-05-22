@@ -72,7 +72,7 @@ const Acciones = ({ params }) => {
               setId('')
             }}
           >
-            <VisibilityOffOutlinedIcon />
+            <VisibilityOffOutlinedIcon sx={{ fontSize: '1.5rem' }}/>
           </IconButton>
         ) : (
           <IconButton
@@ -80,7 +80,7 @@ const Acciones = ({ params }) => {
               setId(params?.id)
             }}
           >
-            <VisibilityOutlinedIcon />
+            <VisibilityOutlinedIcon sx={{ fontSize: '1.5rem' }}/>
           </IconButton>
         )}
       </Tooltip>
@@ -88,7 +88,7 @@ const Acciones = ({ params }) => {
       {usuario.rol !== 'Usuario' && (
         <Tooltip title='Eliminar Cliente'>
           <IconButton onClick={handleClickOpen}>
-            <Delete sx={{ color: colors.redAccent[400] }} />
+            <Delete sx={{ color: colors.redAccent[400], fontSize: '1.5rem' }} />
           </IconButton>
         </Tooltip>
       )}

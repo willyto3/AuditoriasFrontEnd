@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom'
 
 // ? IMPORTACIÓN DE COMPONENTES
 import NavBar from '../components/NavBar'
+import Footer from '../components/Footer'
 
 //! INICIO DEL COMPONENTE PUBLICO
 const Publico = () => {
@@ -12,6 +13,7 @@ const Publico = () => {
     <>
       <NavBar />
       <Outlet />
+      <Footer/>
     </>
   )
 }

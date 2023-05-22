@@ -65,11 +65,11 @@ const columnas = () => {
             >
               {estaActivo && (
                 <CheckCircleOutlineIcon
-                  sx={{ color: colors.greenAccent[500] }}
+                  sx={{ color: colors.greenAccent[500], fontSize: '1.5rem'  }}
                 />
               )}
               {!estaActivo && (
-                <CancelOutlinedIcon sx={{ color: colors.redAccent[400] }} />
+                <CancelOutlinedIcon sx={{ color: colors.redAccent[400],fontSize: '1.5rem' }} />
               )}
             </Box>
           )
@@ -78,11 +78,11 @@ const columnas = () => {
       usuario.rol !== 'Usuario' && {
         field: 'rol',
         headerName: 'Rol',
-        flex: 0.5,
+        flex: 0.45,
         renderCell: ({ row: { rol } }) => {
           return (
             <Box
-              width='80%'
+              width='90%'
               m='0 auto'
               p='5px'
               display='flex'
@@ -94,10 +94,10 @@ const columnas = () => {
                   : colors.greenAccent[800]
               }
             >
-              {rol === 'Admin' && <AdminPanelSettingsOutlinedIcon />}
-              {rol === 'Super Admin' && <SecurityOutlinedIcon />}
-              {rol === 'Usuario' && <LockOpenOutlinedIcon />}
-              <Typography color={colors.grey[100]} sx={{ ml: '5px' }} variant='h4'>
+              {rol === 'Admin' && <AdminPanelSettingsOutlinedIcon sx={{ fontSize: '1.5rem' }}/>}
+              {rol === 'Super Admin' && <SecurityOutlinedIcon sx={{ fontSize: '1.5rem' }}/>}
+              {rol === 'Usuario' && <LockOpenOutlinedIcon sx={{ fontSize: '1.5rem' }}/>}
+              <Typography color={colors.grey[100]} sx={{ ml: '5px' }} variant='h6'>
                 {rol}
               </Typography>
             </Box>
@@ -108,7 +108,7 @@ const columnas = () => {
         field: 'actions',
         headerName: 'Acciones',
         type: 'actions',
-        width: 100,
+        flex: 0.5,
         renderCell: params => <Acciones {...{ params }} />,
       },
     ],

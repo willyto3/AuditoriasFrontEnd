@@ -52,12 +52,12 @@ const navItems = [
 ]
 
 const SideBar = () => {
+  // ? CONSTANTES
   // se usa la tienda para conocer el valor del usuario
   const usuario = auditoriaStore(state => state.usuario)
   const navigate = useNavigate()
   const theme = useTheme()
   const { collapseSidebar, collapsed } = useProSidebar()
-
   // Creamos constantes para los colores
   const colors = tokens(theme.palette.mode)
 
@@ -128,7 +128,7 @@ const SideBar = () => {
                 alignItems='center'
                 ml='20px'
               >
-                <Typography variant='h4'>AUDITORIAS PAULA </Typography>
+                <Typography variant='h6'>AUDITORIAS PAULA </Typography>
                 <ChevronLeft />
               </Box>
             )}
@@ -147,14 +147,14 @@ const SideBar = () => {
               </Box>
               <Box textAlign='center'>
                 <Typography
-                  variant='h5'
+                  variant='h6'
                   fontWeight='bold'
                   color={colors.grey[100]}
                   sx={{ m: '10px 0 0 0' }}
                 >
                   {usuario.nombres} {usuario.apellidos}
                 </Typography>
-                <Typography variant='h5' color={colors.greenAccent[400]}>
+                <Typography variant='h6' color={colors.greenAccent[400]}>
                   {usuario.cargo}
                 </Typography>
               </Box>

@@ -57,8 +57,6 @@ const Tabla = () => {
     )
   }
 
-  console.log(filter)
-
   return (
     <Box m='0 2rem'>
       <Box
@@ -69,7 +67,7 @@ const Tabla = () => {
           },
           '& .MuiDataGrid-cell': {
             borderBottom: 'none',
-            fontSize: '18px',
+            fontSize: '20px',
           },
           '.name-column--cell': {
             color: colors.greenAccent[300],
