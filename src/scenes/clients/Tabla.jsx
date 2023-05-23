@@ -1,5 +1,4 @@
 // ? IMPORTACIÓN DE PAQUETES
-import { useState, useEffect } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 
 // ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
@@ -23,6 +22,10 @@ const Tabla = () => {
   const id = auditoriaStore(state => state.id)
   // se usa la tienda para conocer el valor del filtro
   const filter = auditoriaStore(state => state.filter)
+  // se usa la tienda para conocer el valor del filtro
+  const columnVisibilityModel = auditoriaStore(
+    state => state.columnVisibilityModel
+  )
   // Query para buscar todos los Usuarios
   const { data: clients, isLoading, isError, error } = useClients()
   // Query para buscar un usuario
@@ -67,7 +70,6 @@ const Tabla = () => {
           },
           '& .MuiDataGrid-cell': {
             borderBottom: 'none',
-            fontSize: '20px',
           },
           '.name-column--cell': {
             color: colors.greenAccent[300],
@@ -77,7 +79,6 @@ const Tabla = () => {
             backgroundColor: colors.blueAccent[700],
           },
           '& .MuiDataGrid-columnHeaderTitle': {
-            fontSize: '18px',
             textTransform: 'uppercase',
           },
           '& .MuiDataGrid-virtualScroller': {
@@ -86,9 +87,6 @@ const Tabla = () => {
           '& .MuiDataGrid-footerContainer': {
             borderTop: 'none',
             backgroundColor: colors.blueAccent[700],
-          },
-          '&	.MuiDataGrid-footerCell': {
-            fontSize: '18px',
           },
           '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
             color: `${colors.grey[100]} !important`,
@@ -113,13 +111,9 @@ const Tabla = () => {
             sorting: {
               sortModel: [{ field: 'name', sort: 'asc' }],
             },
-            columns: {
-              columnVisibilityModel: {
-                _id: false,
-              },
-            },
           }}
           filterModel={filter}
+          columnVisibilityModel={columnVisibilityModel}
           pageSizeOptions={[5, 10, 15]}
           autoHeight={true}
         />
@@ -134,6 +128,20 @@ const Tabla = () => {
               getRowId={row => row._id}
               rows={client?.contact || []}
               columns={contactColumn}
+              density='comfortable'
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 10,
+                  },
+                },
+                sorting: {
+                  sortModel: [{ field: 'name', sort: 'asc' }],
+                },
+              }}
+              filterModel={filter}
+              columnVisibilityModel={columnVisibilityModel}
+              pageSizeOptions={[5, 10, 15]}
               autoHeight={true}
             />
           </Box>

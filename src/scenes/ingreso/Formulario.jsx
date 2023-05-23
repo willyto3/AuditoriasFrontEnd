@@ -1,12 +1,10 @@
 // ? IMPORTACIÓN DE PAQUETES
 import { Formik } from 'formik'
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
 
 // ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
 import {
-  Alert,
   Box,
   Button,
   TextField,
@@ -30,6 +28,9 @@ const Formulario = () => {
   const setToken = auditoriaStore(state => state.setToken)
   // se usa la tienda para darle valor al usuario
   const setUsuario = auditoriaStore(state => state.setUsuario)
+  const setColumnVisibilityModel = auditoriaStore(
+    state => state.setColumnVisibilityModel
+  )
 
   const theme = useTheme()
   const navigate = useNavigate()
@@ -37,15 +38,13 @@ const Formulario = () => {
   const colors = tokens(theme.palette.mode)
   const pantallaCompleta = useMediaQuery('(min-width:600px')
 
-  // ? USE STATE
-  const [errorIngreso, setErrorIngreso] = useState('')
-
   const ingreso = async (values, onsubmitProps) => {
     const ingresado = await ingresoUsuario(values)
 
     if (ingresado.ok) {
       setToken(ingresado.token)
       setUsuario(ingresado.usuario)
+      setColumnVisibilityModel(ingresado.usuario)
       enqueueSnackbar(
         `Bienvenido Nuevamente ${ingresado.usuario.nombres} ${ingresado.usuario.apellidos}`,
         {
@@ -60,7 +59,6 @@ const Formulario = () => {
       onsubmitProps.resetForm()
       navigate('/dashboard')
     } else {
-      setErrorIngreso(ingresado.mensaje)
       enqueueSnackbar(`${ingresado.mensaje}`, {
         variant: 'error',
         anchorOrigin: {
@@ -141,19 +139,6 @@ const Formulario = () => {
             >
               LOGIN
             </Button>
-            {errorIngreso ? (
-              <Alert
-                severity='error'
-                sx={{ mb: '2rem', fontSize: 'large' }}
-                onClose={() => {
-                  setErrorIngreso('')
-                }}
-              >
-                {errorIngreso}
-              </Alert>
-            ) : (
-              ''
-            )}
 
             <Typography
               onClick={() => {

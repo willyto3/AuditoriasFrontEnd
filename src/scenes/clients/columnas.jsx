@@ -7,14 +7,11 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined'
 
 // ? IMPORTACIÓN DE COMPONENTES
-import { auditoriaStore } from '../../store/auditoriaStore'
 import Acciones from './Acciones'
 import { tokens } from '../../theme'
 import CreatedBy from './CreatedBy'
 
 const columnas = () => {
-  // se usa la tienda para conocer el valor del usuario
-  const usuario = auditoriaStore(state => state.usuario)
   // Uso del Tema
   const theme = useTheme()
   // Creamos constantes para los colores
@@ -49,13 +46,12 @@ const columnas = () => {
       {
         field: 'avatar',
         headerName: 'Creado por:',
-        flex: 0.6,
+        flex: 0.7,
         renderCell: params => <CreatedBy {...{ params }} />,
         sortable: false,
         filterable: false,
       },
-
-      usuario.rol !== 'Usuario' && {
+      {
         field: 'isActive',
         headerName: 'Activo',
         flex: 0.3,
@@ -74,13 +70,14 @@ const columnas = () => {
                 />
               )}
               {!isActive && (
-                <CancelOutlinedIcon sx={{ color: colors.redAccent[400], fontSize: '1.5rem' }} />
+                <CancelOutlinedIcon
+                  sx={{ color: colors.redAccent[400], fontSize: '1.5rem' }}
+                />
               )}
             </Box>
           )
         },
       },
-
       {
         field: 'actions',
         headerName: 'Acciones',

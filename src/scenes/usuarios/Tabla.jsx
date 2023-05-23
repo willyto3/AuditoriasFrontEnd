@@ -8,6 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 // ? IMPORTACION DE COMPONENTES
 import { tokens } from '../../theme'
 import columnas from './columnas'
+import { auditoriaStore } from '../../store/auditoriaStore'
 
 // ? IMPORTACION DE HOOKS
 import { useUsuarios } from '../../hooks/useUsuarios'
@@ -21,6 +22,9 @@ const Tabla = () => {
   const theme = useTheme()
   // Creamos constantes para los colores
   const colors = tokens(theme.palette.mode)
+  const columnVisibilityModel = auditoriaStore(
+    state => state.columnVisibilityModel
+  )
 
   const columns = columnas()
 
@@ -56,7 +60,6 @@ const Tabla = () => {
           },
           '& .MuiDataGrid-cell': {
             borderBottom: 'none',
-            fontSize: '20px',
           },
           '.name-column--cell': {
             color: colors.greenAccent[300],
@@ -66,7 +69,6 @@ const Tabla = () => {
             backgroundColor: colors.blueAccent[700],
           },
           '& .MuiDataGrid-columnHeaderTitle': {
-            fontSize: '18px',
             textTransform: 'uppercase',
           },
           '& .MuiDataGrid-virtualScroller': {
@@ -102,6 +104,7 @@ const Tabla = () => {
             },
           }}
           pageSizeOptions={[10, 15, 20]}
+          columnVisibilityModel={columnVisibilityModel}
           autoHeight={true}
         />
       </Box>

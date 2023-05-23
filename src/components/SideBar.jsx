@@ -19,6 +19,7 @@ const navItems = [
   {
     title: 'Dashboard',
     to: '/dashboard',
+    view: 'Usuario',
     icon: <HomeOutlinedIcon />,
   },
   {
@@ -28,11 +29,13 @@ const navItems = [
   {
     title: 'Listado Auditores',
     to: 'listado',
+    view: 'Usuario',
     icon: <PeopleOutlinedIcon />,
   },
   {
     title: 'Registro Auditores',
     to: 'registro',
+    view: 'Admin',
     icon: <ReceiptLongOutlined />,
   },
   {
@@ -42,11 +45,13 @@ const navItems = [
   {
     title: 'Listado Clientes',
     to: 'clientlist',
+    view: 'Usuario',
     icon: <PeopleOutlinedIcon />,
   },
   {
     title: 'Registro Clientes',
     to: 'registro',
+    view: 'Admin',
     icon: <ReceiptLongOutlined />,
   },
 ]
@@ -63,19 +68,22 @@ const SideBar = () => {
 
   const [selected, setSelected] = useState('dashboard')
 
-  const Item = ({ title, to, icon, selected }) => {
+  const Item = ({ title, to, icon, view, selected }) => {
+
     return (
-      <MenuItem
-        active={selected === title}
-        style={{ color: colors.grey[100] }}
-        onClick={() => {
-          setSelected(title)
-          navigate(to)
-        }}
-        icon={icon}
-      >
-        <Typography color={colors.grey[100]}>{title}</Typography>
-      </MenuItem>
+      (usuario.rol === 'Super Admin' || usuario.rol === 'Admin' || usuario.rol === view) && (
+        <MenuItem
+          active={selected === title}
+          style={{ color: colors.grey[100] }}
+          onClick={() => {
+            setSelected(title)
+            navigate(to)
+          }}
+          icon={icon}
+        >
+          <Typography color={colors.grey[100]}>{title}</Typography>
+        </MenuItem>
+      )
     )
   }
 
@@ -126,7 +134,7 @@ const SideBar = () => {
                 display='flex'
                 justifyContent='space-between'
                 alignItems='center'
-                ml='20px'
+                ml='10px'
               >
                 <Typography variant='h6'>AUDITORIAS PAULA </Typography>
                 <ChevronLeft />
@@ -135,7 +143,7 @@ const SideBar = () => {
           </MenuItem>
 
           {!collapsed ? (
-            <Box mb='15px'>
+            <Box mb='10px'>
               <Box display='flex' justifyContent='center' alignItems='center'>
                 <img
                   alt='profile-user'
@@ -147,14 +155,13 @@ const SideBar = () => {
               </Box>
               <Box textAlign='center'>
                 <Typography
-                  variant='h6'
-                  fontWeight='bold'
+                  variant='subtitle1'
                   color={colors.grey[100]}
                   sx={{ m: '10px 0 0 0' }}
                 >
                   {usuario.nombres} {usuario.apellidos}
                 </Typography>
-                <Typography variant='h6' color={colors.greenAccent[400]}>
+                <Typography variant='subtitle1' color={colors.greenAccent[400]}>
                   {usuario.cargo}
                 </Typography>
               </Box>
@@ -172,12 +179,12 @@ const SideBar = () => {
           )}
 
           <Box paddingLeft={collapsed ? undefined : '10%'}>
-            {navItems.map(({ title, to, icon }) => {
+            {navItems.map(({ title, to, icon, view }) => {
               if (!icon) {
                 return (
                   <Typography
                     key={title}
-                    variant='h6'
+                    variant='subtitle2'
                     color={colors.greenAccent[300]}
                     sx={{ m: '10px 0 5px 10px' }}
                   >
@@ -193,6 +200,7 @@ const SideBar = () => {
                   icon={icon}
                   selected={selected}
                   setSelected={setSelected}
+                  view={view}
                 />
               )
             })}
@@ -206,4 +214,8 @@ export default SideBar
 
 SideBar.propTypes = {
   title: PropTypes.string,
+  view: PropTypes.string,
+  to: PropTypes.string,
+  icon: PropTypes.string,
+  selected: PropTypes.string,
 }

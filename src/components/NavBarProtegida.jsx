@@ -16,6 +16,7 @@ import {
   AppBar,
   Box,
   Button,
+  Divider,
   IconButton,
   InputBase,
   Menu,
@@ -57,7 +58,6 @@ const NavBarProtegida = () => {
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         <FlexBetween>
           <FlexBetween
-            backgroundColor={colors.greenAccent[600]}
             borderRadius='9px'
             gap='4rem'
             p='0.1rem 1.5rem'
@@ -101,20 +101,19 @@ const NavBarProtegida = () => {
                 component='img'
                 alt='profile'
                 src={`http://localhost:5001/images/${usuario.picturePath}`}
-                height='32px'
-                width='32px'
+                height='40px'
+                width='40px'
                 borderRadius='50%'
                 sx={{ objectFit: 'cover' }}
               />
               <Box textAlign='left'>
                 <Typography
-                  fontWeight='bold'
-                  variant='h5'
+                  variant='h6'
                   color={colors.grey[100]}
                 >
                   {usuario.nombres} {usuario.apellidos}
                 </Typography>
-                <Typography variant='h6' color={colors.greenAccent[500]}>
+                <Typography variant='subtitle1' color={colors.greenAccent[500]}>
                   {usuario.cargo}
                 </Typography>
               </Box>
@@ -126,6 +125,14 @@ const NavBarProtegida = () => {
               onClose={handleClose}
               anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
             >
+              <MenuItem
+                onClick={() => {
+                  navigate(`/dashboard/usuario/${usuario._id}`)
+                }}
+              >
+                Ver Perfil
+              </MenuItem>
+              <Divider/>
               <MenuItem
                 onClick={() => {
                   logout()

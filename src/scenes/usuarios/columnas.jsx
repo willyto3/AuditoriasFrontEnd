@@ -10,13 +10,11 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined'
 
 // ? IMPORTACIÓN DE COMPONENTES
-import { auditoriaStore } from '../../store/auditoriaStore'
 import Acciones from './Acciones'
 import { tokens } from '../../theme'
 
 const columnas = () => {
-  // se usa la tienda para conocer el valor del usuario
-  const usuario = auditoriaStore(state => state.usuario)
+
   // Uso del Tema
   const theme = useTheme()
   // Creamos constantes para los colores
@@ -50,7 +48,7 @@ const columnas = () => {
       { field: 'email', headerName: 'Email', flex: 0.5 },
       { field: 'cargo', headerName: 'Cargo', flex: 0.5 },
 
-      usuario.rol !== 'Usuario' && {
+      {
         field: 'estaActivo',
         headerName: 'Activo',
         width: 80,
@@ -65,24 +63,26 @@ const columnas = () => {
             >
               {estaActivo && (
                 <CheckCircleOutlineIcon
-                  sx={{ color: colors.greenAccent[500], fontSize: '1.5rem'  }}
+                  sx={{ color: colors.greenAccent[500], fontSize: '1.5rem' }}
                 />
               )}
               {!estaActivo && (
-                <CancelOutlinedIcon sx={{ color: colors.redAccent[400],fontSize: '1.5rem' }} />
+                <CancelOutlinedIcon
+                  sx={{ color: colors.redAccent[400], fontSize: '1.5rem' }}
+                />
               )}
             </Box>
           )
         },
       },
-      usuario.rol !== 'Usuario' && {
+      {
         field: 'rol',
         headerName: 'Rol',
-        flex: 0.45,
+        flex: 0.6,
         renderCell: ({ row: { rol } }) => {
           return (
             <Box
-              width='90%'
+              width='95%'
               m='0 auto'
               p='5px'
               display='flex'
@@ -94,10 +94,20 @@ const columnas = () => {
                   : colors.greenAccent[800]
               }
             >
-              {rol === 'Admin' && <AdminPanelSettingsOutlinedIcon sx={{ fontSize: '1.5rem' }}/>}
-              {rol === 'Super Admin' && <SecurityOutlinedIcon sx={{ fontSize: '1.5rem' }}/>}
-              {rol === 'Usuario' && <LockOpenOutlinedIcon sx={{ fontSize: '1.5rem' }}/>}
-              <Typography color={colors.grey[100]} sx={{ ml: '5px' }} variant='h6'>
+              {rol === 'Admin' && (
+                <AdminPanelSettingsOutlinedIcon sx={{ fontSize: '1.5rem' }} />
+              )}
+              {rol === 'Super Admin' && (
+                <SecurityOutlinedIcon sx={{ fontSize: '1.5rem' }} />
+              )}
+              {rol === 'Usuario' && (
+                <LockOpenOutlinedIcon sx={{ fontSize: '1.5rem' }} />
+              )}
+              <Typography
+                color={colors.grey[100]}
+                sx={{ ml: '5px' }}
+                variant='subtitle1'
+              >
                 {rol}
               </Typography>
             </Box>

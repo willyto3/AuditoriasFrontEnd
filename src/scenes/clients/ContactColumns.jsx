@@ -37,9 +37,8 @@ const contactColumns = () => {
       {
         field: 'phoneNumber',
         headerName: 'Telefono',
-        flex: 1,
+        flex: 0.5,
       },
-
       {
         field: 'actions',
         headerName: 'Acciones',

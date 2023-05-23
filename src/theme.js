@@ -161,18 +161,14 @@ export const themeSettings = mode => {
     },
     typography: {
       fontFamily: ['Murecho', 'sans-serif'].join(','),
-      fontSize: '1rem',
       h1: {
         fontFamily: ['Murecho', 'sans-serif'].join(','),
-        fontSize: '4rem',
       },
       h2: {
         fontFamily: ['Murecho', 'sans-serif'].join(','),
-        fontSize: '3rem',
       },
       h3: {
         fontFamily: ['Murecho', 'sans-serif'].join(','),
-        fontSize: '2rem',
       },
       h4: {
         fontFamily: ['Murecho', 'sans-serif'].join(','),
@@ -180,15 +176,12 @@ export const themeSettings = mode => {
       },
       h5: {
         fontFamily: ['Murecho', 'sans-serif'].join(','),
-        fontSize: '1.2rem',
       },
       h6: {
         fontFamily: ['Murecho', 'sans-serif'].join(','),
-        fontSize: '1rem',
       },
       caption:{
         fontFamily: ['Murecho', 'sans-serif'].join(','),
-        fontSize: '0.7rem',
       }
     },
   }

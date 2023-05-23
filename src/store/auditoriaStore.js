@@ -7,21 +7,36 @@ import { persist } from 'zustand/middleware'
 export const auditoriaStore = create(
   persist(
     set => ({
-      // ? TEMA DE LA PÁGINA
+      // ? ESTADOS INICIALES
       mode: 'light',
+      usuario: '',
+      id: '',
+      token: '',
+      estaAutorizado: false,
+
+      filter: {
+        items: [{ field: '_id', operator: 'contains', value: '' }],
+      },
+      columnVisibilityModel: {
+        _id: false,
+      },
+
+      // ? TEMA DE LA PÁGINA
       setMode: () =>
         set(state => ({
           mode: state.mode === 'light' ? 'dark' : 'light',
         })),
 
       // ? TOKEN DEL USUARIO
-      token: '',
-      estaAutorizado: false,
       setToken: token => set(state => ({ token, estaAutorizado: true })),
 
       // ? DATOS DEL USUARIO
-      usuario: '',
-      setUsuario: usuario => set(state => ({ usuario })),
+      setUsuario: usuario =>
+        set(state => ({
+          usuario,
+        })),
+
+      // ? LOGOUT DEL USUARIO
       logout: () =>
         set(state => ({
           token: '',
@@ -30,16 +45,28 @@ export const auditoriaStore = create(
         })),
 
       // ? ID CLIENTE
-      id: '',
-      filter: {
-        items: [{ field: '_id', operator: 'contains', value: '' }],
-      },
       setId: id =>
         set(state => ({
           id,
           filter: {
             items: [{ field: '_id', operator: 'contains', value: `${id}` }],
           },
+        })),
+
+      // ? VISIBILIDAD COLUMNAS
+      setColumnVisibilityModel: usuario =>
+        set(state => ({
+          columnVisibilityModel:
+            state.usuario.rol === 'Usuario'
+              ? {
+                  _id: false,
+                  isActive: false,
+                  estaActivo: false,
+                  rol: false,
+                }
+              : {
+                  _id: false,
+                },
         })),
     }),
 

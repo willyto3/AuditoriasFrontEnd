@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 // Importamos useMemo de React
 import { useMemo } from 'react'
 // Importamos CssBaseLine, Theme Provider y createTheme de mui Material
-import { CssBaseline, ThemeProvider, createTheme } from '@mui/material'
+import { CssBaseline, ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material'
 
 // ? IMPORTACIÓN DE ELEMENTOS
 // Importamos themeSettings del arhivo theme
@@ -18,10 +18,11 @@ const Root = () => {
   // se usa la tienda para elegir el valor del tema
   const mode = auditoriaStore(state => state.mode)
   // Funcion para cambiar el Tema
-  const theme = useMemo(
+  let theme = useMemo(
     () => createTheme(themeSettings(mode)),
     [mode]
   )
+  theme = responsiveFontSizes(theme)
 
   // ? VISUALIZACION
   return (
