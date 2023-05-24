@@ -2,6 +2,8 @@
 import { Formik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
+// Importación del modulo JWT Decode
+import jwtDecode from 'jwt-decode'
 
 // ? IMPORTACIÓN DE ELEMENTOS DE DISEÑO
 import {
@@ -19,7 +21,7 @@ import { esquemaIngreso, valoresIniciales } from './esquema'
 // Importamos la tienda
 import { auditoriaStore } from '../../store/auditoriaStore'
 import { tokens } from '../../theme'
-import { ingresoUsuario } from '../../api/users'
+import { ingresoUsuario } from '../../api/auth'
 
 // ! COMIENZO DEL COMPONENTE
 const Formulario = () => {
@@ -39,14 +41,16 @@ const Formulario = () => {
   const pantallaCompleta = useMediaQuery('(min-width:600px')
 
   const ingreso = async (values, onsubmitProps) => {
-    const ingresado = await ingresoUsuario(values)
+    const response = await ingresoUsuario(values)
 
-    if (ingresado.ok) {
-      setToken(ingresado.token)
-      setUsuario(ingresado.usuario)
-      setColumnVisibilityModel(ingresado.usuario)
+    if (response.accessToken) {
+      setToken(response.accessToken)
+      const usuario = jwtDecode(response.accessToken)
+
+      setUsuario(usuario.UserInfo)
+      setColumnVisibilityModel(usuario.UserInfo)
       enqueueSnackbar(
-        `Bienvenido Nuevamente ${ingresado.usuario.nombres} ${ingresado.usuario.apellidos}`,
+        `Bienvenido Nuevamente ${usuario.UserInfo.nombres} ${usuario.UserInfo.apellidos}`,
         {
           variant: 'success',
           anchorOrigin: {
@@ -59,7 +63,7 @@ const Formulario = () => {
       onsubmitProps.resetForm()
       navigate('/dashboard')
     } else {
-      enqueueSnackbar(`${ingresado.mensaje}`, {
+      enqueueSnackbar(`${response.mensaje}`, {
         variant: 'error',
         anchorOrigin: {
           vertical: 'top',
@@ -105,7 +109,7 @@ const Formulario = () => {
               label='Email'
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.email}
+              value={values.email.toLowerCase()}
               name='email'
               error={Boolean(touched.email) && Boolean(errors.email)}
               helperText={touched.email && errors.email}

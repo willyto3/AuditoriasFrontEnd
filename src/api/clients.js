@@ -3,7 +3,8 @@
 import axios from 'axios'
 
 // Se coloca la URL como una constante
-const BASE_URL = 'https://auditoriasbackend-production.up.railway.app/api/v1'
+// const BASE_URL = 'https://auditoriasbackend-production.up.railway.app/api/v1'
+const BASE_URL = 'http://localhost:5001/api/v1'
 
 // Se genera la conexión por Axios con la base de Datos
 const clientsAPI = axios.create({

@@ -15,9 +15,11 @@ import { useUsuarios } from '../../hooks/useUsuarios'
 
 // ! COMIENZO DEL COMPONENTE
 const Tabla = () => {
+    // se usa la tienda para conocer el valor del usuario
+    const token = auditoriaStore(state => state.token)
   // ? USO DE PAQUETES
   // Query para buscar todos los Usuarios
-  const { data: usuarios, isLoading, isError, error } = useUsuarios()
+  const { data: usuarios, isLoading, isError, error } = useUsuarios(token)
   // Uso del Tema
   const theme = useTheme()
   // Creamos constantes para los colores

@@ -12,8 +12,8 @@ import {
 
 const key = 'busquedaUsuarios'
 
-export const useUsuarios = () => {
-  return useQuery(key, obtenerTodosLosUsuarios)
+export const useUsuarios = (token) => {
+  return useQuery(key, obtenerTodosLosUsuarios(token))
 }
 
 export const useUsuario = id => {
