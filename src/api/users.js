@@ -2,6 +2,9 @@
 // Importación del modulo Axios
 import axios from 'axios'
 
+// ? IMPORTACIÓN DE COMPONENTES
+import { auditoriaStore } from '../store/auditoriaStore'
+
 // Se coloca la URL como una constante
 const BASE_URL = 'https://auditoriasbackend-production.up.railway.app/api/v1'
 // const BASE_URL = 'http://localhost:5001/api/v1'
@@ -16,14 +19,15 @@ export const userUrlEndPoint = '/usuarios'
 
 // ? OBTENER TODOS LOS USUARIOS
 // Se crea y exporta la Función para obtener todos los usuarios
-export const obtenerTodosLosUsuarios = async token => {
-  console.log(token)
+export const obtenerTodosLosUsuarios = async () => {
+  const token = auditoriaStore.getState().token
+
   const header = {
     Authorization: `Bearer ${token}`,
     Accept: 'application/json',
   }
   const response = await usuariosAPI.get(userUrlEndPoint, { headers: header })
-  console.log(response.data)
+
   return response.data
 }
 
