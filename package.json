@@ -1,7 +1,7 @@
 {
   "name": "vite-project",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -20,16 +20,12 @@
     "jwt-decode": "^3.1.2",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
-    "react-data-table-component": "^7.5.3",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hot-toast": "^2.4.1",
     "react-pro-sidebar": "^1.0.0",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.10.0",
-    "redux-persist": "^6.0.0",
-    "styled-components": "^5.3.10",
-    "swr": "^2.1.5",
     "yup": "^1.1.1",
     "zustand": "^4.3.7"
   },
